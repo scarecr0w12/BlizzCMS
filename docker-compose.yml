@@ -1,7 +1,6 @@
-version: '3.9'
-
 networks:
   cms-network:
+    driver: bridge
 
 services:
   webserver:
@@ -10,7 +9,11 @@ services:
       dockerfile: ./docker/server/Dockerfile
     container_name: '${APP_NAME}-webserver'
     ports:
-      - '${APP_PORT}:80'
+      - '0.0.0.0:${APP_PORT}:80'
+    expose:
+      - '80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
@@ -26,8 +29,6 @@ services:
     image: mariadb:10.6.11
     container_name: '${APP_NAME}-dbserver'
     restart: always
-    ports:
-      - '${DB_PORT}:3306'
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
       MYSQL_USER: '${MYSQL_USER}'

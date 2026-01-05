@@ -9,4 +9,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Config directly related to the status of the CMS installation.
 |
 */
-$config['installation_active'] = true;
+$config['installation_active'] = false;
