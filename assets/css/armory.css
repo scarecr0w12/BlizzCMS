@@ -1,0 +1,466 @@
+/**
+ * BlizzCMS Armory Module Styles
+ * Custom styles for the armory module
+ */
+
+/* ==========================================================================
+   Character Equipment Display
+   ========================================================================== */
+
+.bc-character-view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.bc-equipment-left,
+.bc-equipment-right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bc-character-model {
+    width: 300px;
+    height: 400px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.bc-equipment-slot {
+    width: 56px;
+    height: 56px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #333;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+}
+
+.bc-equipment-slot:hover {
+    border-color: #555;
+}
+
+.bc-equipment-slot img {
+    width: 48px;
+    height: 48px;
+    border-radius: 2px;
+}
+
+.bc-equipment-slot.empty {
+    border-style: dashed;
+}
+
+/* Equipment Bottom Row (Rings, Trinkets) */
+.bc-equipment-bottom {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   Item Quality Colors
+   ========================================================================== */
+
+.bc-quality-poor { color: #9d9d9d !important; }
+.bc-quality-common { color: #ffffff !important; }
+.bc-quality-uncommon { color: #1eff00 !important; }
+.bc-quality-rare { color: #0070dd !important; }
+.bc-quality-epic { color: #a335ee !important; }
+.bc-quality-legendary { color: #ff8000 !important; }
+.bc-quality-artifact { color: #e6cc80 !important; }
+.bc-quality-heirloom { color: #00ccff !important; }
+
+/* Item slot borders by quality */
+.bc-equipment-slot.quality-poor { border-color: #9d9d9d; }
+.bc-equipment-slot.quality-common { border-color: #ffffff; }
+.bc-equipment-slot.quality-uncommon { border-color: #1eff00; }
+.bc-equipment-slot.quality-rare { border-color: #0070dd; }
+.bc-equipment-slot.quality-epic { border-color: #a335ee; }
+.bc-equipment-slot.quality-legendary { border-color: #ff8000; }
+.bc-equipment-slot.quality-artifact { border-color: #e6cc80; }
+.bc-equipment-slot.quality-heirloom { border-color: #00ccff; }
+
+/* ==========================================================================
+   Class Colors
+   ========================================================================== */
+
+.bc-class-1 { color: #C79C6E !important; }  /* Warrior */
+.bc-class-2 { color: #F58CBA !important; }  /* Paladin */
+.bc-class-3 { color: #ABD473 !important; }  /* Hunter */
+.bc-class-4 { color: #FFF569 !important; }  /* Rogue */
+.bc-class-5 { color: #FFFFFF !important; }  /* Priest */
+.bc-class-6 { color: #C41F3B !important; }  /* Death Knight */
+.bc-class-7 { color: #0070DE !important; }  /* Shaman */
+.bc-class-8 { color: #69CCF0 !important; }  /* Mage */
+.bc-class-9 { color: #9482C9 !important; }  /* Warlock */
+.bc-class-10 { color: #00FF96 !important; } /* Monk */
+.bc-class-11 { color: #FF7D0A !important; } /* Druid */
+.bc-class-12 { color: #A330C9 !important; } /* Demon Hunter */
+.bc-class-13 { color: #33937F !important; } /* Evoker */
+
+/* ==========================================================================
+   Faction Colors
+   ========================================================================== */
+
+.bc-faction-alliance { color: #0078ff !important; }
+.bc-faction-horde { color: #ff2020 !important; }
+
+.bc-faction-badge-alliance {
+    background: linear-gradient(135deg, #0056b3 0%, #0078ff 100%);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    text-transform: uppercase;
+}
+
+.bc-faction-badge-horde {
+    background: linear-gradient(135deg, #8b0000 0%, #ff2020 100%);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Money Display
+   ========================================================================== */
+
+.bc-gold { color: #ffd100; }
+.bc-silver { color: #c7c7cf; }
+.bc-copper { color: #f0a15a; }
+
+/* ==========================================================================
+   Stats Display
+   ========================================================================== */
+
+.bc-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.bc-stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.bc-stat-label {
+    color: #888;
+}
+
+.bc-stat-value {
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Talent Tree
+   ========================================================================== */
+
+.bc-talent-tree {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.bc-talent-spec {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 200px;
+    text-align: center;
+}
+
+.bc-talent-spec.active {
+    border: 2px solid #f8b700;
+}
+
+.bc-talent-spec-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.bc-talent-points {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #f8b700;
+}
+
+/* ==========================================================================
+   Achievement Display
+   ========================================================================== */
+
+.bc-achievement {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.bc-achievement-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.bc-achievement-info {
+    flex: 1;
+}
+
+.bc-achievement-name {
+    font-weight: 600;
+    color: #f8b700;
+    margin-bottom: 4px;
+}
+
+.bc-achievement-desc {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.bc-achievement-points {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #f8b700;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Arena Team Display
+   ========================================================================== */
+
+.bc-arena-team {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.bc-arena-team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bc-arena-team-name {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.bc-arena-team-rating {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #f8b700;
+}
+
+.bc-arena-team-type {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+/* ==========================================================================
+   Guild Display
+   ========================================================================== */
+
+.bc-guild-header {
+    text-align: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.bc-guild-emblem {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3em;
+    color: #333;
+}
+
+.bc-guild-name {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.bc-guild-info {
+    color: #888;
+}
+
+/* ==========================================================================
+   Search Results
+   ========================================================================== */
+
+.bc-search-result {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+}
+
+.bc-search-result:hover {
+    background: rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+.bc-search-result-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    margin-right: 15px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.bc-search-result-info {
+    flex: 1;
+}
+
+.bc-search-result-name {
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.bc-search-result-details {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.bc-search-result-level {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #f8b700;
+}
+
+/* ==========================================================================
+   PvP Stats
+   ========================================================================== */
+
+.bc-pvp-stat-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.bc-pvp-stat-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #f8b700;
+}
+
+.bc-pvp-stat-label {
+    color: #888;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .bc-character-view {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bc-equipment-left,
+    .bc-equipment-right {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bc-character-model {
+        order: -1;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .bc-talent-tree {
+        flex-direction: column;
+    }
+
+    .bc-arena-team-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+}
+
+/* ==========================================================================
+   Race Icons (placeholder classes)
+   ========================================================================== */
+
+.bc-race-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+/* ==========================================================================
+   Online Status
+   ========================================================================== */
+
+.bc-status-online {
+    color: #1eff00;
+}
+
+.bc-status-offline {
+    color: #888;
+}
+
+.bc-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.bc-status-dot.online {
+    background: #1eff00;
+    box-shadow: 0 0 4px #1eff00;
+}
+
+.bc-status-dot.offline {
+    background: #666;
+}

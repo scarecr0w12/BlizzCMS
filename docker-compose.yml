@@ -3,13 +3,41 @@ networks:
     driver: bridge
 
 services:
+  nginx:
+    image: nginx:alpine
+    container_name: '${APP_NAME}-nginx'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      - DOMAIN=${DOMAIN}
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/conf.d/active.conf:/etc/nginx/conf.d/default.conf.template:ro
+      - ./docker/certbot/conf:/etc/letsencrypt:ro
+      - ./docker/certbot/www:/var/www/certbot:ro
+    depends_on:
+      - webserver
+    networks:
+      - cms-network
+    command: /bin/sh -c "envsubst '$$DOMAIN' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+
+  certbot:
+    image: certbot/certbot
+    container_name: '${APP_NAME}-certbot'
+    volumes:
+      - ./docker/certbot/conf:/etc/letsencrypt
+      - ./docker/certbot/www:/var/www/certbot
+    networks:
+      - cms-network
+
   webserver:
     build:
       context: .
       dockerfile: ./docker/server/Dockerfile
     container_name: '${APP_NAME}-webserver'
-    ports:
-      - '0.0.0.0:${APP_PORT}:80'
+    # Internal port only - Nginx handles external traffic
     expose:
       - '80'
     extra_hosts:
