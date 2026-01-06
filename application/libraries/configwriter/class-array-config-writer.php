@@ -99,8 +99,8 @@ class Array_Config_Writer
     protected $_autoSave = true;
 
     /**
-     * @param string $config_file Asolute path to config file
-     * @param string $variable_name the name of the config varible to update
+     * @param string $config_file Absolute path to config file
+     * @param string $variable_name the name of the config variable to update
      */
     public function __construct($config_file, $variable_name = '\$config', $auto_save = true) 
     {
@@ -111,15 +111,17 @@ class Array_Config_Writer
 
         if (! file_exists($this->_file))
         {
-            //throw new Exception('Config Write Error: Config file doesnt exists ' . $this->_file);
-            $this->_lastError = 'Config Write Error: Config file doesnt exists ' . $this->_file;
+            $this->_lastError = 'Config Write Error: Config file does not exist: ' . $this->_file;
+            log_message('error', $this->_lastError);
 
             return;
         }
 
         if (! $variable_name)
         {
-            $this->_lastError = 'You must set the set parameter of the library construct has varible to update';
+            $this->_lastError = 'You must set the variable name parameter in the library constructor';
+            log_message('error', $this->_lastError);
+
             return;
         }
 

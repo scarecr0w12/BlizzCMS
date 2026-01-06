@@ -89,3 +89,39 @@ if (! function_exists('zone_name'))
         return lang('unknown');
     }
 }
+
+if (! function_exists('format_playtime'))
+{
+    /**
+     * Format playtime in seconds to human readable format
+     *
+     * @param int $seconds
+     * @return string
+     */
+    function format_playtime($seconds)
+    {
+        if ($seconds <= 0) {
+            return '0 minutes';
+        }
+
+        $days = floor($seconds / 86400);
+        $hours = floor(($seconds % 86400) / 3600);
+        $minutes = floor(($seconds % 3600) / 60);
+
+        $parts = [];
+        
+        if ($days > 0) {
+            $parts[] = $days . ' ' . ($days == 1 ? 'day' : 'days');
+        }
+        
+        if ($hours > 0) {
+            $parts[] = $hours . ' ' . ($hours == 1 ? 'hour' : 'hours');
+        }
+        
+        if ($minutes > 0 && $days == 0) {
+            $parts[] = $minutes . ' ' . ($minutes == 1 ? 'minute' : 'minutes');
+        }
+
+        return implode(', ', $parts) ?: '0 minutes';
+    }
+}

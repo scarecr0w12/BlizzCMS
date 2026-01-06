@@ -160,7 +160,7 @@ $config['composer_autoload'] = realpath(FCPATH . 'vendor/autoload.php');
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-\+';
 
 /*
 |--------------------------------------------------------------------------
@@ -225,7 +225,7 @@ $config['allow_get_array'] = true;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4;
 
 /*
 |--------------------------------------------------------------------------
@@ -326,8 +326,7 @@ $config['cache_query_string'] = false;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
-
+$config['encryption_key'] = '9d97a458ccef24107544f9fbfa21cd78cb4810c5f0107829';
 /*
 |--------------------------------------------------------------------------
 | Session Variables
@@ -383,11 +382,11 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'files';
+$config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'blizz_sess';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = sys_get_temp_dir();
+$config['sess_save_path'] = 'sessions';
 $config['sess_match_ip'] = false;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = false;
@@ -529,4 +528,4 @@ $config['rewrite_short_tags'] = false;
 | Comma-separated:	'10.0.1.200,192.168.5.0/24'
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
-$config['proxy_ips'] = [];
+$config['proxy_ips'] = ['10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'];

@@ -1,49 +1,51 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$active_group = 'default';
-$query_builder = TRUE;
+$active_group = 'cms';
+$query_builder = true;
 
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+$db['cms'] = [
+	'dsn'      => '',
+	'hostname' => 'dbserver',
+	'username' => 'blizzcms',
+	'password' => 'blizzcmspassword',
+	'database' => 'blizzcms',
+	'port'     => 3306,
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
-	'pconnect' => FALSE,
+	'pconnect' => false,
 	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
+	'cache_on' => false,
 	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
+	'char_set' => 'utf8mb4',
+	'dbcollat' => 'utf8mb4_unicode_ci',
 	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+	'encrypt'  => false,
+	'compress' => false,
+	'stricton' => false,
+	'failover' => [],
+	'save_queries' => true,
+];
 
-$db['auth'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+$db['auth'] = [
+	'dsn'      => '',
+	'hostname' => 'host.docker.internal',
+	'username' => 'acore',
+	'password' => 'acore',
+	'database' => 'acore_auth',
+	'port'     => 3306,
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
-	'pconnect' => FALSE,
+	'pconnect' => false,
 	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
+	'cache_on' => false,
 	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
+	'char_set' => 'utf8mb4',
+	'dbcollat' => 'utf8mb4_unicode_ci',
 	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+	'encrypt'  => false,
+	'compress' => false,
+	'stricton' => false,
+	'failover' => [],
+	'save_queries' => true,
+];

@@ -87,28 +87,19 @@ class MX_Modules
      *
      * @method load
      *
-     * @param  [type] $module [description]
+     * @param  mixed $module Module name or array with module => params
      *
-     * @return [type]         [description]
+     * @return mixed Controller instance or null
      */
     public static function load($module)
     {
-        // Backward function
-        // The function each() has been DEPRECATED as of PHP 7.2.0. Relying on this function is highly discouraged
-        // Before PHP 7.1.0, list() only worked on numerical arrays and assumes the numerical indices start at 0.
-        if (version_compare(phpversion(), '7.1', '<')) {
-            // php version isn't high enough
-            is_array($module) ? list($module, $params) = each($module) : $params = null;
+        // Extract module name and params from array if provided
+        if (is_array($module)) {
+            $keys   = array_keys($module);
+            $params = $module[$keys[0]];
+            $module = $keys[0];
         } else {
-            if (!is_array($module)) {
-                $params = null;
-            } else {
-                $keys = array_keys($module);
-
-                $params = $module[$keys[0]];
-
-                $module = $keys[0];
-            }
+            $params = null;
         }
 
         // get the requested controller class name
@@ -116,15 +107,8 @@ class MX_Modules
 
         // create or return an existing controller from the registry
         if (!isset(self::$registry[$alias])) {
-            // Backward function
-            // Before PHP 7.1.0, list() only worked on numerical arrays and assumes the numerical indices start at 0.
-            if (version_compare(phpversion(), '7.1', '<')) {
-                // php version isn't high enough
-                // find the controller
-                list($class) = CI::$APP->router->locate(explode('/', $module));
-            } else {
-                [$class] = CI::$APP->router->locate(explode('/', $module));
-            }
+            // find the controller
+            [$class] = CI::$APP->router->locate(explode('/', $module));
 
             // controller cannot be located
             if (empty($class)) {
