@@ -1,0 +1,61 @@
+<?php
+/**
+ * BlizzCMS - Database Viewer Language File
+ */
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$lang['database_title'] = 'Database Viewer';
+$lang['database_description'] = 'Browse World of Warcraft game data';
+$lang['database_items'] = 'Items';
+$lang['database_spells'] = 'Spells';
+$lang['database_quests'] = 'Quests';
+$lang['database_creatures'] = 'Creatures';
+$lang['database_zones'] = 'Zones';
+$lang['database_npcs'] = 'NPCs';
+$lang['database_objects'] = 'Objects';
+$lang['database_search'] = 'Search Database';
+$lang['database_search_placeholder'] = 'Search items, spells, quests...';
+$lang['database_browse'] = 'Browse';
+$lang['database_no_results'] = 'No results found';
+$lang['database_item_name'] = 'Item Name';
+$lang['database_item_quality'] = 'Quality';
+$lang['database_item_level'] = 'Item Level';
+$lang['database_item_type'] = 'Type';
+$lang['database_item_class'] = 'Class';
+$lang['database_item_subclass'] = 'Subclass';
+$lang['database_item_stats'] = 'Stats';
+$lang['database_item_required_level'] = 'Required Level';
+$lang['database_item_required_class'] = 'Required Class';
+$lang['database_item_required_race'] = 'Required Race';
+$lang['database_spell_name'] = 'Spell Name';
+$lang['database_spell_rank'] = 'Rank';
+$lang['database_spell_school'] = 'School';
+$lang['database_spell_effect'] = 'Effect';
+$lang['database_spell_cast_time'] = 'Cast Time';
+$lang['database_spell_cooldown'] = 'Cooldown';
+$lang['database_spell_range'] = 'Range';
+$lang['database_quest_name'] = 'Quest Name';
+$lang['database_quest_level'] = 'Quest Level';
+$lang['database_quest_type'] = 'Type';
+$lang['database_quest_objectives'] = 'Objectives';
+$lang['database_quest_rewards'] = 'Rewards';
+$lang['database_quest_giver'] = 'Quest Giver';
+$lang['database_creature_name'] = 'Creature Name';
+$lang['database_creature_level'] = 'Level';
+$lang['database_creature_type'] = 'Type';
+$lang['database_creature_classification'] = 'Classification';
+$lang['database_creature_health'] = 'Health';
+$lang['database_creature_mana'] = 'Mana';
+$lang['database_creature_armor'] = 'Armor';
+$lang['database_creature_loot'] = 'Loot';
+$lang['database_zone_name'] = 'Zone Name';
+$lang['database_zone_level'] = 'Level Range';
+$lang['database_zone_type'] = 'Type';
+$lang['database_zone_creatures'] = 'Creatures';
+$lang['database_zone_quests'] = 'Quests';
+$lang['database_back_to_list'] = 'Back to List';
+$lang['database_admin_settings'] = 'Database Viewer Settings';
+$lang['database_admin_enable'] = 'Enable Database Viewer';
+$lang['database_admin_items_per_page'] = 'Items Per Page';
+$lang['database_admin_show_quality_colors'] = 'Show Quality Colors';
+$lang['database_admin_enable_tooltips'] = 'Enable Item Tooltips';
