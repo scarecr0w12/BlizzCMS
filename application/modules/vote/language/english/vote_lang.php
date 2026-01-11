@@ -79,3 +79,35 @@ $lang['vote_default_cooldown'] = 'Default Cooldown (Hours)';
 // Buttons
 $lang['vote_view_sites'] = 'View Vote Sites';
 $lang['vote_view_history'] = 'View History';
+
+// Admin Dashboard
+$lang['vote_admin_title'] = 'Vote Management';
+$lang['vote_manage_sites'] = 'Manage Sites';
+$lang['vote_manage_sites_desc'] = 'Add, edit, or remove vote sites';
+$lang['vote_logs_desc'] = 'View detailed voting logs and activity';
+$lang['vote_settings_desc'] = 'Configure voting system settings';
+$lang['vote_view_public'] = 'View Public Page';
+$lang['vote_view_public_desc'] = 'See the voting page as users see it';
+$lang['vote_no_votes'] = 'No votes have been recorded yet.';
+$lang['vote_no_logs'] = 'No vote logs found.';
+$lang['vote_votes_today'] = 'Votes Today';
+
+// Settings
+$lang['vote_enabled_help'] = 'Allow users to vote for your server';
+$lang['vote_cooldown_help'] = 'Hours users must wait between votes (applies to new sites by default)';
+$lang['vote_default_vp'] = 'Default VP Per Vote';
+$lang['vote_default_vp_help'] = 'Default vote points awarded per vote (can be overridden per site)';
+$lang['vote_ip_check'] = 'Enable IP Check';
+$lang['vote_ip_check_help'] = 'Prevent multiple votes from same IP address';
+$lang['vote_display_settings'] = 'Display Settings';
+$lang['vote_top_voters_count'] = 'Top Voters Count';
+$lang['vote_top_voters_count_help'] = 'Number of top voters to display';
+$lang['vote_show_top_sidebar'] = 'Show Top Voters in Sidebar';
+$lang['vote_show_top_sidebar_help'] = 'Display top voters widget in sidebar';
+
+// Misc
+$lang['vote_all_sites'] = 'All Sites';
+$lang['vote_site_desc_placeholder'] = 'Enter a description for this vote site...';
+$lang['vote_image_help'] = 'Optional logo/banner for the vote site';
+$lang['voting_points'] = 'Vote Points';
+$lang['total_vp'] = 'Total VP';

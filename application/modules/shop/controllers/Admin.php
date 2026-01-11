@@ -59,6 +59,8 @@ class Admin extends Admin_Controller
      */
     public function categories()
     {
+        require_permission('view.shop.category', 'shop');
+
         $data = [
             'categories' => $this->shop_model->get_all_categories()
         ];
@@ -101,7 +103,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_category_added'));
             redirect(site_url('shop/admin/categories'));
         } else {
-            $this->template->build('admin/add_category');
+            $this->template->build('admin/category_form');
         }
     }
 
@@ -147,7 +149,7 @@ class Admin extends Admin_Controller
             redirect(site_url('shop/admin/categories'));
         } else {
             $data = ['category' => $category];
-            $this->template->build('admin/edit_category', $data);
+            $this->template->build('admin/category_form', $data);
         }
     }
 
@@ -180,6 +182,8 @@ class Admin extends Admin_Controller
      */
     public function items()
     {
+        require_permission('view.shop.item', 'shop');
+
         $data = [
             'items' => $this->shop_model->get_all_items()
         ];
@@ -237,7 +241,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_item_added'));
             redirect(site_url('shop/admin/items'));
         } else {
-            $this->template->build('admin/add_item', $data);
+            $this->template->build('admin/item_form', $data);
         }
     }
 
@@ -295,7 +299,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_item_updated'));
             redirect(site_url('shop/admin/items'));
         } else {
-            $this->template->build('admin/edit_item', $data);
+            $this->template->build('admin/item_form', $data);
         }
     }
 
@@ -328,6 +332,8 @@ class Admin extends Admin_Controller
      */
     public function services()
     {
+        require_permission('view.shop.service', 'shop');
+
         $data = [
             'services' => $this->shop_model->get_all_services()
         ];
@@ -382,7 +388,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_service_added'));
             redirect(site_url('shop/admin/services'));
         } else {
-            $this->template->build('admin/add_service', $data);
+            $this->template->build('admin/service_form', $data);
         }
     }
 
@@ -436,7 +442,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_service_updated'));
             redirect(site_url('shop/admin/services'));
         } else {
-            $this->template->build('admin/edit_service', $data);
+            $this->template->build('admin/service_form', $data);
         }
     }
 
@@ -469,6 +475,8 @@ class Admin extends Admin_Controller
      */
     public function subscriptions()
     {
+        require_permission('view.shop.subscription', 'shop');
+
         $data = [
             'subscriptions' => $this->shop_model->get_all_subscription_plans()
         ];
@@ -526,7 +534,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_subscription_added'));
             redirect(site_url('shop/admin/subscriptions'));
         } else {
-            $this->template->build('admin/add_subscription', $data);
+            $this->template->build('admin/subscription_form', $data);
         }
     }
 
@@ -583,7 +591,7 @@ class Admin extends Admin_Controller
             $this->session->set_flashdata('success', lang('alert_subscription_updated'));
             redirect(site_url('shop/admin/subscriptions'));
         } else {
-            $this->template->build('admin/edit_subscription', $data);
+            $this->template->build('admin/subscription_form', $data);
         }
     }
 
@@ -616,6 +624,8 @@ class Admin extends Admin_Controller
      */
     public function orders()
     {
+        require_permission('view.shop.order', 'shop');
+
         $per_page = 20;
         $page = max(1, (int)$this->input->get('page'));
         $offset = ($page - 1) * $per_page;
@@ -645,6 +655,8 @@ class Admin extends Admin_Controller
      */
     public function order_detail($id)
     {
+        require_permission('view.shop.order', 'shop');
+
         $order = $this->order_model->get_order($id);
 
         if (empty($order)) {
@@ -731,6 +743,8 @@ class Admin extends Admin_Controller
      */
     public function payments()
     {
+        require_permission('view.shop.payment', 'shop');
+
         $per_page = 50;
         $page = max(1, (int)$this->input->get('page'));
         $offset = ($page - 1) * $per_page;

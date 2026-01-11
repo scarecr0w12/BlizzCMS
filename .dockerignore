@@ -1,2 +1,13 @@
 vendor/*
 composer.lock
+
+# Exclude certbot runtime directories (owned by root, not needed for build)
+docker/certbot/conf/accounts
+docker/certbot/conf/archive
+docker/certbot/conf/live
+docker/certbot/conf/renewal
+docker/certbot/conf/renewal-hooks
+
+# Exclude other runtime directories
+docker/db/mariadb/
+docker/nginx/ssl/

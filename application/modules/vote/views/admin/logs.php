@@ -4,7 +4,7 @@
       <div class="uk-width-expand">
         <ul class="uk-breadcrumb uk-margin-remove">
           <li><a href="<?= site_url('admin') ?>"><?= lang('admin_panel') ?></a></li>
-          <li><a href="<?= site_url('admin/vote') ?>"><?= lang('vote') ?></a></li>
+          <li><a href="<?= site_url('vote/admin') ?>"><?= lang('vote') ?></a></li>
           <li><span><?= lang('vote_logs') ?></span></li>
         </ul>
         <h1 class="uk-h3 uk-text-bold uk-margin-remove">
@@ -16,7 +16,7 @@
     <!-- Filters -->
     <div class="uk-card uk-card-default uk-margin-bottom">
       <div class="uk-card-body uk-padding-small">
-        <?= form_open('admin/vote/logs', ['method' => 'get', 'class' => 'uk-form-horizontal']) ?>
+        <?= form_open('vote/admin/logs', ['method' => 'get', 'class' => 'uk-form-horizontal']) ?>
           <div class="uk-grid-small uk-flex uk-flex-middle" uk-grid>
             <div class="uk-width-auto">
               <label class="uk-form-label"><?= lang('filter') ?>:</label>
@@ -25,18 +25,18 @@
               <select class="uk-select" name="site_id">
                 <option value=""><?= lang('vote_all_sites') ?></option>
                 <?php foreach ($sites as $site): ?>
-                <option value="<?= $site->id ?>" <?= ($site_filter == $site->id) ? 'selected' : '' ?>><?= html_escape($site->name) ?></option>
+                <option value="<?= $site->id ?>" <?= (isset($filters['site_id']) && $filters['site_id'] == $site->id) ? 'selected' : '' ?>><?= html_escape($site->name) ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
             <div class="uk-width-auto">
-              <input class="uk-input" type="text" name="user" value="<?= html_escape($user_filter ?? '') ?>" placeholder="<?= lang('user') ?>">
+              <input class="uk-input" type="text" name="search" value="<?= html_escape($filters['search'] ?? '') ?>" placeholder="<?= lang('search') ?>">
             </div>
             <div class="uk-width-auto">
               <button type="submit" class="uk-button uk-button-primary uk-button-small">
                 <i class="fa-solid fa-search"></i> <?= lang('filter') ?>
               </button>
-              <a href="<?= site_url('admin/vote/logs') ?>" class="uk-button uk-button-default uk-button-small">
+              <a href="<?= site_url('vote/admin/logs') ?>" class="uk-button uk-button-default uk-button-small">
                 <i class="fa-solid fa-times"></i> <?= lang('clear') ?>
               </a>
             </div>
@@ -103,19 +103,19 @@
             <?php $total_pages = ceil($total / $per_page); ?>
             <?php 
             $query_params = [];
-            if ($site_filter) $query_params['site_id'] = $site_filter;
-            if (!empty($user_filter)) $query_params['user'] = $user_filter;
+            if (!empty($filters['site_id'])) $query_params['site_id'] = $filters['site_id'];
+            if (!empty($filters['search'])) $query_params['search'] = $filters['search'];
             ?>
             <?php if ($current_page > 1): ?>
-            <li><a href="<?= site_url('admin/vote/logs?' . http_build_query(array_merge($query_params, ['page' => $current_page - 1]))) ?>"><span uk-pagination-previous></span></a></li>
+            <li><a href="<?= site_url('vote/admin/logs?' . http_build_query(array_merge($query_params, ['page' => $current_page - 1]))) ?>"><span uk-pagination-previous></span></a></li>
             <?php endif; ?>
             <?php for ($i = max(1, $current_page - 2); $i <= min($total_pages, $current_page + 2); $i++): ?>
             <li class="<?= $i == $current_page ? 'uk-active' : '' ?>">
-              <a href="<?= site_url('admin/vote/logs?' . http_build_query(array_merge($query_params, ['page' => $i]))) ?>"><?= $i ?></a>
+              <a href="<?= site_url('vote/admin/logs?' . http_build_query(array_merge($query_params, ['page' => $i]))) ?>"><?= $i ?></a>
             </li>
             <?php endfor; ?>
             <?php if ($current_page < $total_pages): ?>
-            <li><a href="<?= site_url('admin/vote/logs?' . http_build_query(array_merge($query_params, ['page' => $current_page + 1]))) ?>"><span uk-pagination-next></span></a></li>
+            <li><a href="<?= site_url('vote/admin/logs?' . http_build_query(array_merge($query_params, ['page' => $current_page + 1]))) ?>"><span uk-pagination-next></span></a></li>
             <?php endif; ?>
           </ul>
         </div>

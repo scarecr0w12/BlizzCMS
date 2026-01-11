@@ -18,8 +18,7 @@
 
     <div class="uk-card uk-card-default">
       <div class="uk-card-body">
-        <form action="<?= site_url('donate/admin/gateways/edit/' . $gateway->name) ?>" method="post">
-          <?= csrf_field() ?>
+        <?= form_open('donate/admin/gateways/edit/' . $gateway->name) ?>
           
           <div class="uk-grid-small" uk-grid>
             <div class="uk-width-1-2@s">
@@ -94,7 +93,7 @@
               <?= lang('cancel') ?>
             </a>
           </div>
-        </form>
+        <?= form_close() ?>
       </div>
     </div>
   </div>

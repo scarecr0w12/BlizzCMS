@@ -2,109 +2,121 @@
 
 ## Architecture Overview
 
-BlizzCMS is a CodeIgniter 3-based CMS for World of Warcraft private server communities, extended with **HMVC (Hierarchical MVC)** via the MX (Modular Extensions) library.
+BlizzCMS is a **CodeIgniter 3 CMS** with **HMVC** (Modular Extensions/MX library) for WoW private server communities.
 
-### Core Components
-- **Base Controllers**: `BS_Controller` (public) and `Admin_Controller` (admin panel) in [application/core/BS_Controller.php](application/core/BS_Controller.php)
-- **Base Model**: `BS_Model` with auto-timestamps (`$setCreatedField`, `$setUpdatedField`) in [application/core/BS_Model.php](application/core/BS_Model.php)
-- **Template Library**: Handles theming, layouts, partials, SEO meta via `$this->template->build('view', $data)`
-- **Multilanguage**: Browser detection, session-based language switching in [application/libraries/Multilanguage.php](application/libraries/Multilanguage.php)
+### Core Layers
+- **Core classes** (`application/core/`): `BS_Controller`, `Admin_Controller`, `BS_Model` - extend these, never CI base classes
+- **Modules** (`application/modules/{name}/`): Self-contained features (shop, vote, donate, user, armory)
+- **Dual database**: `$db['cms']` (app data) + `$db['auth']` (WoW emulator auth)
 
-### Database Structure
-- **CMS database** (`$db['cms']`): Application data (users, settings, modules)
-- **Auth database** (`$db['auth']`): Game server authentication (WoW emulator)
-- Configured in [application/config/database.php](application/config/database.php)
+## Controller Patterns
 
-## Key Conventions
-
-### Controller Patterns
 ```php
-// Public controller - extend BS_Controller
+// Public pages - extend BS_Controller
 class MyController extends BS_Controller {
     public function __construct() {
         parent::__construct();
-        require_login();  // Require authentication
-        $this->load->language('mymodule');
+        require_login();                    // Auth guard
+        $this->load->language('mymodule');  // Load translations
     }
 }
 
-// Admin controller - extend Admin_Controller (auto-loads admin layout)
+// Admin panel - extend Admin_Controller (auto-sets admin layout)
 class Admin extends Admin_Controller {
     public function __construct() {
         parent::__construct();
-        require_permission('view.myfeature', 'modulename');
+        require_permission('view.shop', 'shop');  // Permission check first
+        $this->load->model(['shop/shop_model']);  // Module models use path prefix
     }
 }
 ```
 
-### Model Patterns
-Models extend `BS_Model` and define `$table`. Override `insert()`/`update()` only when adding custom logic (e.g., password hashing in `User_model`).
+## Permission System
 
-### Permission System
-- Use `require_permission('action.resource', 'module')` in controllers to enforce access
-- Use `has_permission('action.resource', 'module')` in views for conditional display
-- Special contexts: `:base:` for core features, `:page:` for custom pages
+Permission keys follow `action.resource` pattern with module context:
+```php
+// Controllers - blocks access with 403
+require_permission('view.shop', 'shop');
+require_permission('edit.vote', 'vote');
+require_permission('delete.newscomments', ':base:');  // Core feature
 
-### View Rendering
+// Views - conditional display
+<?php if (has_permission('edit.newscomments', ':base:')): ?>
+```
+Special modules: `:base:` (core), `:page:` (custom pages), `:menu-item:` (menus)
+
+## Model Conventions
+
+```php
+class Item_model extends BS_Model {
+    protected $table = 'items';
+    protected $setCreatedField = true;  // Auto-fills created_at on insert
+    protected $setUpdatedField = true;  // Auto-fills updated_at on update
+}
+```
+Override `insert()`/`update()` only for custom logic (see `User_model` for password hashing example).
+
+## Module Structure
+
+```
+application/modules/shop/
+├── config/routes.php    # Routes auto-prefixed: 'shop/cart' → shop/cart
+├── controllers/
+│   ├── Shop.php         # Public controller (default)
+│   └── Admin.php        # Admin panel (convention: class Admin)
+├── models/              # Module-specific models
+├── language/english/    # Module translations
+├── migrations/          # Module-specific migrations
+└── views/
+```
+Check module status: `is_module_installed('shop', $showError = false)`
+
+## Routing
+
+Routes support HTTP method constraints:
+```php
+$route['shop/cart']['get'] = 'shop/cart';
+$route['shop/cart/add']['post'] = 'shop/add_to_cart';
+$route['shop/admin/items/edit/(:num)']['get'] = 'admin/edit_item/$1';
+```
+
+## View Rendering
+
 ```php
 $this->template->title('Page Title', config_item('app_name'));
-$this->template->set_seo_metas(['title' => '...', 'robots' => '...']);
-$this->template->build('view_name', $data);
+$this->template->build('view_name', ['items' => $items]);  // Renders with layout
 ```
 
-## Module System (HMVC)
+## Key Helpers
 
-Modules live in `application/modules/{name}/` with structure:
+```php
+// Auth (application/helpers/base_helper.php)
+is_logged_in(), require_login(), require_guest()
+user('column'), user('column', $user_id), user_avatar($id)
+
+// Dates (application/helpers/extra_helper.php)
+current_date('Y-m-d H:i:s')  // Auto-used by BS_Model timestamps
+locate_date($date, lang('datetime_pattern'))  // Localized display
+
+// Settings
+config_item('app_name')  // From database settings table
 ```
-modules/mymodule/
-├── config/routes.php    # Module routes (prefixed with module name)
-├── controllers/         # Module controllers
-├── language/           # Module translations
-├── views/              # Module views
-```
 
-Check module installation: `is_module_installed('modulename', $showError = false)`
-
-## Routing Conventions
-
-Routes in [application/config/routes.php](application/config/routes.php) and module-specific `config/routes.php`:
-- Use method constraints: `$route['path']['get']`, `$route['path']['post']`
-- Admin routes: `admin/{feature}/{action}/(:num)`
-- Module routes auto-prefixed with module name
-
-## Helper Functions
-
-Key helpers in `application/helpers/`:
-- `is_logged_in()`, `require_login()`, `require_guest()` - Auth guards
-- `user($column, $id)`, `user_avatar($id)` - User data access
-- `current_date($format)`, `locate_date($date, $pattern)` - Datetime handling
-- `config_item('key')` - Settings from database/config
-
-## Language Files
-
-Structure: `application/language/{lang}/` with files like `general_lang.php`, `form_validation_lang.php`
-- Access: `lang('key')` or `lang_vars('key', [$var1])`
-- Module languages: `application/modules/{name}/language/{lang}/`
-
-## Development Setup
+## Development
 
 ```bash
-# Docker environment
-docker-compose up -d
-
-# Access points (configure .env)
-# - Web: http://localhost:${APP_PORT}
-# - phpMyAdmin: http://localhost:8080
-```
-
-## Form Validation
-
-Use CI3 form validation with callback support:
-```php
-$this->form_validation->set_rules('field', lang('label'), 'trim|required|callback_custom_check');
-// Callbacks work due to: $this->form_validation->CI =& $this; in BS_Controller
+docker-compose up -d    # Start environment
+# Web: http://localhost (via nginx)
+# phpMyAdmin: http://localhost:${APP_DB_ADMIN_PORT}
 ```
 
 ## Migrations
 
-Migrations in `application/migrations/` use format `YYYYMMDDHHMMSS_description.php`. Run via admin panel or CLI.
+Format: `YYYYMMDDHHMMSS_description.php` in `application/migrations/` or `application/modules/{name}/migrations/`
+
+## Form Validation
+
+Callback methods work due to `$this->form_validation->CI =& $this;` in BS_Controller:
+```php
+$this->form_validation->set_rules('field', lang('label'), 'trim|required|callback_my_check');
+```
