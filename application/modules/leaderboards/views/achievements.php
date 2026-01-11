@@ -22,6 +22,14 @@
                     </thead>
                     <tbody>
                         <?php 
+                        if (empty($rankings)): 
+                        ?>
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                <?= lang('leaderboards_no_data') ?>
+                            </td>
+                        </tr>
+                        <?php else:
                         $rank = $offset + 1;
                         foreach ($rankings as $character): 
                         ?>
@@ -35,7 +43,7 @@
                             <td><?= $character->level ?></td>
                             <td><strong><?= $character->achievement_count ?></strong></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

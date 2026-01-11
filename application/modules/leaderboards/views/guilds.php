@@ -23,6 +23,14 @@
                     </thead>
                     <tbody>
                         <?php 
+                        if (empty($rankings)): 
+                        ?>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <?= lang('leaderboards_no_data') ?>
+                            </td>
+                        </tr>
+                        <?php else:
                         $rank = $offset + 1;
                         foreach ($rankings as $guild): 
                             $avg_level = $guild->member_count > 0 ? round($guild->total_levels / $guild->member_count, 1) : 0;
@@ -38,7 +46,7 @@
                             <td><?= number_format($guild->total_levels) ?></td>
                             <td><?= $avg_level ?></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

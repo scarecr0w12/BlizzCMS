@@ -151,4 +151,104 @@ class Events_model extends CI_Model
             'total_rsvps' => $this->db->count_all('event_rsvps'),
         ];
     }
+
+    public function search_events($query, $type = null, $limit = 50)
+    {
+        $this->db->like('title', $query);
+        $this->db->or_like('description', $query);
+        $this->db->where('start_date >=', date('Y-m-d H:i:s'));
+
+        if ($type && $type !== 'all') {
+            $this->db->where('event_type', $type);
+        }
+
+        return $this->db->order_by('start_date', 'ASC')
+            ->limit($limit)
+            ->get('events')
+            ->result();
+    }
+
+    public function get_past_events($limit = 10, $offset = 0)
+    {
+        return $this->db->where('start_date <', date('Y-m-d H:i:s'))
+            ->order_by('start_date', 'DESC')
+            ->limit($limit, $offset)
+            ->get('events')
+            ->result();
+    }
+
+    public function get_events_by_realm($realm_id, $limit = 10, $offset = 0)
+    {
+        return $this->db->where('realm_id', $realm_id)
+            ->where('start_date >=', date('Y-m-d H:i:s'))
+            ->order_by('start_date', 'ASC')
+            ->limit($limit, $offset)
+            ->get('events')
+            ->result();
+    }
+
+    public function get_rsvp_status_count($event_id)
+    {
+        $statuses = ['attending' => 0, 'tentative' => 0, 'declined' => 0];
+        
+        $query = $this->db->where('event_id', $event_id)
+            ->group_by('status')
+            ->select('status, COUNT(*) as count')
+            ->get('event_rsvps');
+
+        foreach ($query->result() as $row) {
+            if (isset($statuses[$row->status])) {
+                $statuses[$row->status] = $row->count;
+            }
+        }
+
+        return $statuses;
+    }
+
+    public function get_event_attendees($event_id)
+    {
+        return $this->db->where('event_id', $event_id)
+            ->where('status', 'attending')
+            ->order_by('created_at', 'ASC')
+            ->get('event_rsvps')
+            ->result();
+    }
+
+    public function is_event_full($event_id)
+    {
+        $event = $this->get_event($event_id);
+        
+        if (!$event || !$event->max_participants) {
+            return false;
+        }
+
+        $count = $this->get_rsvp_count($event_id);
+        return $count >= $event->max_participants;
+    }
+
+    public function get_user_rsvp_status($event_id, $user_id)
+    {
+        $rsvp = $this->get_user_rsvp($event_id, $user_id);
+        return $rsvp ? $rsvp->status : null;
+    }
+
+    public function get_events_by_creator($user_id, $limit = 10, $offset = 0)
+    {
+        return $this->db->where('created_by', $user_id)
+            ->order_by('start_date', 'DESC')
+            ->limit($limit, $offset)
+            ->get('events')
+            ->result();
+    }
+
+    public function get_setting($key, $default = null)
+    {
+        $query = $this->db->where('setting_key', $key)->get('event_settings');
+        
+        if ($query->num_rows() > 0) {
+            return $query->row()->setting_value;
+        }
+        
+        return $default;
+    }
 }

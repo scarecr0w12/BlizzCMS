@@ -35,7 +35,11 @@ class Leaderboards_model extends CI_Model
     {
         $this->load->model('realm_model');
         $realms = $this->realm_model->find_all();
-        return !empty($realms) ? $realms[0]->id : null;
+        if (empty($realms)) {
+            log_message('debug', 'Leaderboards: No realms found in database');
+            return null;
+        }
+        return $realms[0]->id;
     }
 
     public function get_pvp_rankings($limit = 50, $offset = 0, $realm_id = null)

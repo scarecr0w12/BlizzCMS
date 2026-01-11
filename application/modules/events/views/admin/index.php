@@ -39,60 +39,60 @@
     <?php endif; ?>
 
     <div class="row mb-4">
-        <div class="col-md-6 col-lg-3 mb-3">
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
             <div class="card border-left-primary shadow h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
+                <div class="card-body p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Events</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($stats['total_events']) ?></div>
                         </div>
-                        <div class="col-auto">
+                        <div class="text-right">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-3 mb-3">
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
             <div class="card border-left-success shadow h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
+                <div class="card-body p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Upcoming Events</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($stats['upcoming_events']) ?></div>
                         </div>
-                        <div class="col-auto">
+                        <div class="text-right">
                             <i class="fas fa-clock fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-3 mb-3">
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
             <div class="card border-left-info shadow h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
+                <div class="card-body p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Past Events</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($stats['past_events']) ?></div>
                         </div>
-                        <div class="col-auto">
+                        <div class="text-right">
                             <i class="fas fa-history fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-3 mb-3">
+        <div class="col-12 col-sm-6 col-lg-3 mb-3">
             <div class="card border-left-warning shadow h-100">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
+                <div class="card-body p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total RSVPs</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($stats['total_rsvps']) ?></div>
                         </div>
-                        <div class="col-auto">
+                        <div class="text-right">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -251,12 +251,118 @@
 </div>
 
 <style>
+/* Border utilities */
 .border-left-primary { border-left: 4px solid #4e73df !important; }
 .border-left-success { border-left: 4px solid #1cc88a !important; }
 .border-left-info { border-left: 4px solid #36b9cc !important; }
 .border-left-warning { border-left: 4px solid #f6c23e !important; }
-.shadow { box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15) !important; }
+
+/* Shadow and spacing */
+.shadow { box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important; }
+.h-100 { height: 100% !important; }
+
+/* Text utilities */
 .text-gray-800 { color: #5a5c69 !important; }
 .text-gray-300 { color: #dddfeb !important; }
-.text-xs { font-size: 0.7rem; }
+.text-xs { font-size: 0.75rem !important; }
+.text-uppercase { text-transform: uppercase !important; }
+.text-right { text-align: right !important; }
+.text-center { text-align: center !important; }
+.text-muted { color: #6c757d !important; }
+.font-weight-bold { font-weight: 700 !important; }
+
+/* Card utilities */
+.card { border: 1px solid #e3e6f0; }
+.card-body { padding: 1.25rem; }
+.card-body.p-3 { padding: 0.75rem !important; }
+.card-header { padding: 0.75rem 1.25rem; background-color: #f8f9fa; }
+
+/* Typography */
+.h5 { font-size: 1.25rem !important; }
+.h6 { font-size: 1rem !important; margin-bottom: 0.5rem; }
+
+/* Flexbox utilities */
+.d-flex { display: flex !important; }
+.align-items-center { align-items: center !important; }
+.align-items-start { align-items: flex-start !important; }
+.justify-content-between { justify-content: space-between !important; }
+.justify-content-center { justify-content: center !important; }
+.flex-grow-1 { flex-grow: 1 !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+
+/* Margin utilities */
+.m-0 { margin: 0 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: 0.25rem !important; }
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+.mr-1 { margin-right: 0.25rem !important; }
+.mr-2 { margin-right: 0.5rem !important; }
+
+/* Padding utilities */
+.p-3 { padding: 0.75rem !important; }
+.py-3 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+.py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+
+/* Grid utilities */
+.col { flex-basis: 0; flex-grow: 1; max-width: 100%; }
+.col-auto { flex: 0 0 auto; width: auto; }
+.no-gutters { margin-right: 0; margin-left: 0; }
+.no-gutters > .col,
+.no-gutters > [class*="col-"] { padding-right: 0; padding-left: 0; }
+
+/* Badge utilities */
+.badge { display: inline-block; padding: 0.25rem 0.6rem; font-size: 0.75rem; font-weight: 700; line-height: 1; border-radius: 0.25rem; }
+.badge-primary { background-color: #4e73df; color: white; }
+.badge-success { background-color: #1cc88a; color: white; }
+.badge-danger { background-color: #e74c3c; color: white; }
+.badge-warning { background-color: #f6c23e; color: #333; }
+.badge-info { background-color: #36b9cc; color: white; }
+.badge-secondary { background-color: #858796; color: white; }
+
+/* Button utilities */
+.btn { display: inline-block; padding: 0.375rem 0.75rem; font-size: 1rem; font-weight: 400; line-height: 1.5; border-radius: 0.25rem; border: 1px solid transparent; cursor: pointer; }
+.btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; }
+.btn-primary { background-color: #4e73df; color: white; border-color: #4e73df; }
+.btn-success { background-color: #1cc88a; color: white; border-color: #1cc88a; }
+.btn-danger { background-color: #e74c3c; color: white; border-color: #e74c3c; }
+.btn-info { background-color: #36b9cc; color: white; border-color: #36b9cc; }
+.btn-secondary { background-color: #858796; color: white; border-color: #858796; }
+
+/* List group utilities */
+.list-group { display: flex; flex-direction: column; padding-left: 0; margin-bottom: 0; border: 1px solid #e3e6f0; border-radius: 0.25rem; }
+.list-group-item { position: relative; display: block; padding: 0.75rem 1.25rem; background-color: #fff; border: 1px solid #e3e6f0; }
+.list-group-item:first-child { border-top-left-radius: 0.25rem; border-top-right-radius: 0.25rem; }
+.list-group-item:last-child { border-bottom-left-radius: 0.25rem; border-bottom-right-radius: 0.25rem; }
+.list-group-flush { border-radius: 0; }
+.list-group-flush > .list-group-item { border-width: 0 0 1px 0; }
+.list-group-flush > .list-group-item:last-child { border-bottom-width: 0; }
+
+/* Table utilities */
+.table { width: 100%; margin-bottom: 1rem; border-collapse: collapse; }
+.table th, .table td { padding: 0.75rem; border-bottom: 1px solid #dee2e6; }
+.table thead th { border-bottom: 2px solid #dee2e6; background-color: #f8f9fa; font-weight: 700; }
+.table-hover tbody tr:hover { background-color: #f5f5f5; }
+.table-sm th, .table-sm td { padding: 0.3rem 0.6rem; }
+.thead-light thead th { background-color: #f8f9fa; border-color: #dee2e6; }
+
+/* Alert utilities */
+.alert { position: relative; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem; }
+.alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+.alert-danger { color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; }
+.alert-dismissible { padding-right: 4rem; }
+.alert-dismissible .close { position: absolute; right: 0; top: 0; padding: 0.75rem 1.25rem; color: inherit; }
+
+/* Responsive utilities */
+@media (max-width: 576px) {
+  .col-12 { flex: 0 0 100%; max-width: 100%; }
+}
+@media (min-width: 576px) {
+  .col-sm-6 { flex: 0 0 50%; max-width: 50%; }
+}
+@media (min-width: 992px) {
+  .col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+  .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
+}
 </style>

@@ -248,7 +248,17 @@ class CI_Cache extends CI_Driver_Library {
 
 		if ( ! isset($support, $support[$driver]))
 		{
-			$support[$driver] = $this->{$driver}->is_supported();
+			$support[$driver] = FALSE;
+			
+			// Check if driver is in valid drivers list
+			if (in_array($driver, $this->valid_drivers))
+			{
+				try {
+					$support[$driver] = $this->{$driver}->is_supported();
+				} catch (Exception $e) {
+					$support[$driver] = FALSE;
+				}
+			}
 		}
 
 		return $support[$driver];

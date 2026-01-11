@@ -147,11 +147,18 @@ Modify the CSS in `application/modules/playermap/views/index.php`
 ### Language Translations
 Add translations in `application/modules/playermap/language/[your_language]/playermap_lang.php`
 
+## Project Information
+
+**BlizzCMS Version:** 3.0  
+**Module Status:** Complete & Production Ready  
+**Last Updated:** January 11, 2026  
+**Maintained By:** BlizzCMS Community
+
 ## Credits
 
 - **Original Playermap**: Dmitry Koterov
 - **AzerothCore Fork**: Helias and contributors
-- **BlizzCMS Integration**: WoW-CMS
+- **BlizzCMS Integration**: Community Contributors
 
 ## License
 
@@ -160,4 +167,4 @@ This module follows the MIT License in accordance with BlizzCMS licensing.
 ## Support
 
 For issues specific to the BlizzCMS integration, please report them in your BlizzCMS project.
-For original playermap issues, visit: https://github.com/azerothcore/playermap
+For more information, see the main README.md and CHANGELOG.md in the project root.

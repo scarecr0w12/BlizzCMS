@@ -24,6 +24,14 @@
                     </thead>
                     <tbody>
                         <?php 
+                        if (empty($rankings)): 
+                        ?>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <?= lang('leaderboards_no_data') ?>
+                            </td>
+                        </tr>
+                        <?php else:
                         $rank = $offset + 1;
                         foreach ($rankings as $character): 
                         ?>
@@ -39,7 +47,7 @@
                             <td><?= number_format($character->todayHonorPoints) ?></td>
                             <td><?= number_format($character->yesterdayHonorPoints) ?></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

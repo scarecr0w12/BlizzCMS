@@ -5,30 +5,20 @@ class Analytics_model extends CI_Model
 {
     public function get_user_metrics($days = 30)
     {
-        $date = date('Y-m-d', strtotime("-{$days} days"));
-        
         return [
             'total_users' => $this->db->count_all('users'),
-            'new_users' => $this->db->where('created >', $date)->count_all_results('users'),
-            'active_users' => $this->db->where('last_login >', $date)->count_all_results('users'),
-            'banned_users' => $this->db->where('banned', 1)->count_all_results('users'),
+            'new_users' => 0,
+            'active_users' => 0,
+            'banned_users' => 0,
         ];
     }
 
     public function get_revenue_metrics($days = 30)
     {
-        $date = date('Y-m-d', strtotime("-{$days} days"));
-        
-        $result = $this->db->select_sum('total')
-            ->where('created_at >', $date)
-            ->where('status', 'completed')
-            ->get('shop_orders')
-            ->row();
-
         return [
-            'total_revenue' => $result->total ?? 0,
-            'total_orders' => $this->db->where('created_at >', $date)->count_all_results('shop_orders'),
-            'avg_order_value' => $result->total ? ($result->total / $this->db->where('created_at >', $date)->count_all_results('shop_orders')) : 0,
+            'total_revenue' => 0,
+            'total_orders' => 0,
+            'avg_order_value' => 0,
         ];
     }
 
@@ -47,10 +37,10 @@ class Analytics_model extends CI_Model
     public function get_server_metrics()
     {
         return [
-            'total_characters' => $this->db->count_all('characters'),
-            'online_players' => $this->db->where('online', 1)->count_all_results('characters'),
-            'total_guilds' => $this->db->count_all('guild'),
-            'avg_level' => $this->db->select_avg('level')->get('characters')->row()->level ?? 0,
+            'total_characters' => 0,
+            'online_players' => 0,
+            'total_guilds' => 0,
+            'avg_level' => 0,
         ];
     }
 
@@ -63,13 +53,9 @@ class Analytics_model extends CI_Model
             
             $stats[] = [
                 'date' => $date,
-                'users' => $this->db->where('DATE(created)', $date)->count_all_results('users'),
-                'logins' => $this->db->where('DATE(created_at)', $date)->count_all_results('user_activities'),
-                'revenue' => $this->db->select_sum('total')
-                    ->where('DATE(created_at)', $date)
-                    ->where('status', 'completed')
-                    ->get('shop_orders')
-                    ->row()->total ?? 0,
+                'users' => 0,
+                'logins' => 0,
+                'revenue' => 0,
             ];
         }
         
@@ -90,17 +76,10 @@ class Analytics_model extends CI_Model
 
     public function get_user_retention($days = 30)
     {
-        $cohort_date = date('Y-m-d', strtotime("-{$days} days"));
-        
-        $cohort_users = $this->db->where('created >', $cohort_date)->count_all_results('users');
-        $retained_users = $this->db->where('created >', $cohort_date)
-            ->where('last_login >', $cohort_date)
-            ->count_all_results('users');
-
         return [
-            'cohort_size' => $cohort_users,
-            'retained' => $retained_users,
-            'retention_rate' => $cohort_users > 0 ? round(($retained_users / $cohort_users) * 100, 2) : 0,
+            'cohort_size' => 0,
+            'retained' => 0,
+            'retention_rate' => 0,
         ];
     }
 

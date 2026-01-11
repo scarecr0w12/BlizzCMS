@@ -11,6 +11,9 @@ class Leaderboards extends MX_Controller
 
     public function index()
     {
+        $this->load->model('realm_model');
+        $realms = $this->realm_model->find_all();
+        
         $data = [
             'categories' => [
                 'pvp' => lang('leaderboards_pvp'),
@@ -19,7 +22,8 @@ class Leaderboards extends MX_Controller
                 'achievements' => lang('leaderboards_achievements'),
                 'professions' => lang('leaderboards_professions'),
                 'guilds' => lang('leaderboards_guilds'),
-            ]
+            ],
+            'has_realms' => !empty($realms)
         ];
 
         $this->template->title(lang('leaderboards_title'));

@@ -17,6 +17,7 @@ class Shop extends BS_Controller
         is_module_installed('shop', true);
         
         $this->load->language('shop/shop');
+        $this->load->helper('shop');
 
         // Temporarily disabled check to debug
         // $shop_enabled = config_item('shop_enabled');
@@ -694,21 +695,65 @@ class Shop extends BS_Controller
             return false;
         }
 
-        // Get realm connection
+        $character_id = $order_item->character_id;
         $realm_id = $order_item->realm_id ?: 1;
-        
-        // TODO: Implement actual item delivery via SOAP or direct DB
-        // This depends on your emulator (TrinityCore, AzerothCore, etc.)
-        // Example for AzerothCore using soap:
-        // $this->_send_mail($order_item->character_id, $product->item_id, $product->item_count * $order_item->quantity);
+        $item_id = $product->item_id;
+        $item_count = $product->item_count * $order_item->quantity;
 
-        // For now, mark as delivered
-        $this->order_model->update_item_status($order_item->id, 'delivered');
-        
-        // Reduce stock
-        $this->shop_model->reduce_stock($product->id, $order_item->quantity);
+        try {
+            $this->load->database('characters', true, true);
 
-        return true;
+            $character = $this->db->where('id', $character_id)
+                ->get('characters')
+                ->row();
+
+            if (empty($character)) {
+                log_message('error', 'Character not found for item delivery: ' . $character_id);
+                return false;
+            }
+
+            $mail_data = [
+                'receiver' => $character_id,
+                'sender' => 61, // System sender ID
+                'subject' => 'Item from Shop',
+                'body' => 'Thank you for your purchase: ' . $product->name,
+                'has_items' => 1,
+                'expire_time' => time() + (30 * 24 * 60 * 60), // 30 days
+                'deliver_time' => time(),
+                'money' => 0,
+                'cod' => 0,
+                'checked' => 0
+            ];
+
+            $this->db->insert('mail', $mail_data);
+            $mail_id = $this->db->insert_id();
+
+            $mail_item = [
+                'mail_id' => $mail_id,
+                'item_guid' => 0,
+                'item_template' => $item_id,
+                'item_count' => $item_count,
+                'item_flags' => 0,
+                'item_enchantments' => '',
+                'item_random_properties_id' => 0,
+                'item_upgrade_id' => 0,
+                'item_suffix_factor' => 0
+            ];
+
+            $this->db->insert('mail_items', $mail_item);
+
+            $this->order_model->update_item_status($order_item->id, 'delivered');
+            
+            $this->shop_model->reduce_stock($product->id, $order_item->quantity);
+
+            log_message('info', 'Item delivered: ' . $product->name . ' to character ' . $character_id);
+
+            return true;
+
+        } catch (Exception $e) {
+            log_message('error', 'Item delivery error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -725,17 +770,67 @@ class Shop extends BS_Controller
             return false;
         }
 
-        // TODO: Implement service application based on service_type
-        // Examples:
-        // - rename: Set character at_login flag for rename
-        // - race_change: Set at_login flag for race change
-        // - faction_change: Set at_login flag for faction change
-        // - level_boost: Update character level directly
-        // - gold: Send gold via mail
+        $character_id = $order_item->character_id;
+        $realm_id = $order_item->realm_id ?: 1;
 
-        $this->order_model->update_item_status($order_item->id, 'delivered');
+        try {
+            $this->load->database('characters', true, true);
+            
+            switch ($service->service_type) {
+                case 'rename':
+                    $this->db->where('id', $character_id)
+                        ->update('characters', ['at_login' => $this->db->raw('at_login | 1')]);
+                    break;
 
-        return true;
+                case 'race_change':
+                    $this->db->where('id', $character_id)
+                        ->update('characters', ['at_login' => $this->db->raw('at_login | 2')]);
+                    break;
+
+                case 'faction_change':
+                    $this->db->where('id', $character_id)
+                        ->update('characters', ['at_login' => $this->db->raw('at_login | 4')]);
+                    break;
+
+                case 'customize':
+                    $this->db->where('id', $character_id)
+                        ->update('characters', ['at_login' => $this->db->raw('at_login | 8')]);
+                    break;
+
+                case 'level_boost':
+                    $boost_level = (int)$service->service_value ?: 70;
+                    $this->db->where('id', $character_id)
+                        ->update('characters', ['level' => $boost_level]);
+                    break;
+
+                case 'profession_boost':
+                    $profession_skill = (int)$service->service_value ?: 300;
+                    $this->db->where('guid', $character_id)
+                        ->update('character_skills', ['value' => $profession_skill]);
+                    break;
+
+                case 'gold':
+                    $gold_amount = (int)$service->service_value ?: 1000;
+                    $this->db->where('id', $character_id)
+                        ->update('characters', ['money' => $this->db->raw('money + ' . ($gold_amount * 10000))]);
+                    break;
+
+                case 'custom':
+                    log_message('info', 'Custom service applied: ' . $service->name . ' for character ' . $character_id);
+                    break;
+
+                default:
+                    log_message('warning', 'Unknown service type: ' . $service->service_type);
+                    return false;
+            }
+
+            $this->order_model->update_item_status($order_item->id, 'delivered');
+            return true;
+
+        } catch (Exception $e) {
+            log_message('error', 'Service application error: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /**
@@ -782,10 +877,63 @@ class Shop extends BS_Controller
      */
     private function _process_paypal_checkout($amount)
     {
-        // TODO: Implement PayPal integration
-        // Store cart in session and redirect to PayPal
-        $this->session->set_flashdata('error', lang('shop_paypal_not_configured'));
-        redirect(site_url('shop/checkout'));
+        $paypal_config = [
+            'mode' => config_item('paypal_mode') ?? 'sandbox',
+            'client_id' => config_item('paypal_client_id'),
+            'secret' => config_item('paypal_secret'),
+        ];
+
+        if (empty($paypal_config['client_id']) || empty($paypal_config['secret'])) {
+            $this->session->set_flashdata('error', lang('shop_paypal_not_configured'));
+            redirect(site_url('shop/checkout'));
+            return;
+        }
+
+        $cart_items = $this->cart->contents();
+        if (empty($cart_items)) {
+            $this->session->set_flashdata('error', lang('shop_cart_empty'));
+            redirect(site_url('shop/checkout'));
+            return;
+        }
+
+        $order = $this->order_model->create([
+            'user_id' => user_id(),
+            'total_amount' => $amount,
+            'payment_method' => 'paypal',
+            'status' => 'pending',
+            'ip_address' => $this->input->ip_address()
+        ]);
+
+        $order_items = [];
+        foreach ($cart_items as $item) {
+            $order_items[] = [
+                'order_id' => $order->id,
+                'product_id' => $item['id'],
+                'product_type' => $item['options']['type'] ?? 'item',
+                'quantity' => $item['qty'],
+                'price' => $item['price'],
+                'realm_id' => $item['options']['realm_id'] ?? 0,
+                'character_id' => $item['options']['character_id'] ?? 0,
+                'status' => 'pending'
+            ];
+        }
+
+        $this->order_model->insert_items($order_items);
+
+        $this->session->set_userdata('paypal_order_id', $order->id);
+
+        $paypal_url = ($paypal_config['mode'] === 'sandbox') 
+            ? 'https://www.sandbox.paypal.com/checkoutnow'
+            : 'https://www.paypal.com/checkoutnow';
+
+        $ec_token = $this->_create_paypal_token($paypal_config, $amount, $order->id);
+        
+        if ($ec_token) {
+            redirect($paypal_url . '?token=' . $ec_token);
+        } else {
+            $this->session->set_flashdata('error', lang('shop_paypal_error'));
+            redirect(site_url('shop/checkout'));
+        }
     }
 
     /**
@@ -796,9 +944,108 @@ class Shop extends BS_Controller
      */
     private function _process_stripe_checkout($amount)
     {
-        // TODO: Implement Stripe integration
-        $this->session->set_flashdata('error', lang('shop_stripe_not_configured'));
-        redirect(site_url('shop/checkout'));
+        $stripe_config = [
+            'public_key' => config_item('stripe_public_key'),
+            'secret_key' => config_item('stripe_secret_key'),
+        ];
+
+        if (empty($stripe_config['secret_key'])) {
+            $this->session->set_flashdata('error', lang('shop_stripe_not_configured'));
+            redirect(site_url('shop/checkout'));
+            return;
+        }
+
+        $cart_items = $this->cart->contents();
+        if (empty($cart_items)) {
+            $this->session->set_flashdata('error', lang('shop_cart_empty'));
+            redirect(site_url('shop/checkout'));
+            return;
+        }
+
+        $order = $this->order_model->create([
+            'user_id' => user_id(),
+            'total_amount' => $amount,
+            'payment_method' => 'stripe',
+            'status' => 'pending',
+            'ip_address' => $this->input->ip_address()
+        ]);
+
+        $order_items = [];
+        foreach ($cart_items as $item) {
+            $order_items[] = [
+                'order_id' => $order->id,
+                'product_id' => $item['id'],
+                'product_type' => $item['options']['type'] ?? 'item',
+                'quantity' => $item['qty'],
+                'price' => $item['price'],
+                'realm_id' => $item['options']['realm_id'] ?? 0,
+                'character_id' => $item['options']['character_id'] ?? 0,
+                'status' => 'pending'
+            ];
+        }
+
+        $this->order_model->insert_items($order_items);
+
+        $this->session->set_userdata('stripe_order_id', $order->id);
+
+        $line_items = [];
+        foreach ($cart_items as $item) {
+            $line_items[] = [
+                'price_data' => [
+                    'currency' => strtolower(config_item('shop_currency') ?? 'usd'),
+                    'product_data' => [
+                        'name' => $item['name'],
+                        'description' => $item['options']['description'] ?? '',
+                    ],
+                    'unit_amount' => (int)($item['price'] * 100),
+                ],
+                'quantity' => $item['qty'],
+            ];
+        }
+
+        $session_data = [
+            'payment_method_types' => ['card'],
+            'line_items' => $line_items,
+            'mode' => 'payment',
+            'success_url' => site_url('shop/payment/stripe_success'),
+            'cancel_url' => site_url('shop/checkout'),
+            'metadata' => [
+                'order_id' => $order->id,
+                'user_id' => user_id(),
+            ]
+        ];
+
+        $this->session->set_userdata('stripe_session_data', $session_data);
+        redirect(site_url('shop/payment/stripe_checkout'));
+    }
+
+    /**
+     * Create PayPal token for Express Checkout
+     *
+     * @param array $config
+     * @param float $amount
+     * @param int $order_id
+     * @return string|false
+     */
+    private function _create_paypal_token($config, $amount, $order_id)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.' . ($config['mode'] === 'sandbox' ? 'sandbox.' : '') . 'paypal.com/v1/oauth2/token');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERPWD, $config['client_id'] . ':' . $config['secret']);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $token_data = json_decode($response, true);
+        
+        if (empty($token_data['access_token'])) {
+            return false;
+        }
+
+        return $token_data['access_token'];
     }
 
 }

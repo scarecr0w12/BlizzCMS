@@ -114,6 +114,42 @@ class Migration_create_social_tables extends CI_Migration
             ['setting_key' => 'max_friends', 'setting_value' => '100'],
             ['setting_key' => 'message_retention_days', 'setting_value' => '90'],
         ]);
+
+        // User activities table
+        $this->dbforge->add_field([
+            'id' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'auto_increment' => TRUE
+            ],
+            'user_id' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'unsigned'   => TRUE,
+            ],
+            'activity_type' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100,
+            ],
+            'activity_description' => [
+                'type' => 'TEXT',
+                'null' => TRUE,
+            ],
+            'is_public' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 1,
+            ],
+            'created_at' => [
+                'type' => 'TIMESTAMP',
+                'null' => FALSE,
+            ]
+        ]);
+        $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('user_id');
+        $this->dbforge->add_key('created_at');
+        $this->dbforge->create_table('user_activities', TRUE);
     }
 
     public function down()
@@ -121,5 +157,6 @@ class Migration_create_social_tables extends CI_Migration
         $this->dbforge->drop_table('user_friends', TRUE);
         $this->dbforge->drop_table('user_messages', TRUE);
         $this->dbforge->drop_table('social_settings', TRUE);
+        $this->dbforge->drop_table('user_activities', TRUE);
     }
 }

@@ -42,6 +42,14 @@
                     </thead>
                     <tbody>
                         <?php 
+                        if (empty($rankings)): 
+                        ?>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <?= lang('leaderboards_no_data') ?>
+                            </td>
+                        </tr>
+                        <?php else:
                         $rank = $offset + 1;
                         foreach ($rankings as $team): 
                             $win_rate = $team->seasonGames > 0 ? round(($team->seasonWins / $team->seasonGames) * 100, 1) : 0;
@@ -54,7 +62,7 @@
                             <td><?= $team->seasonWins ?></td>
                             <td><?= $win_rate ?>%</td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

@@ -1,10 +1,17 @@
 <div class="container mt-4">
     <h1 class="mb-4"><?= lang('leaderboards_title') ?></h1>
 
+    <?php if (!$has_realms): ?>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>No Realms Configured</strong>
+        <p class="mb-0">Leaderboards require at least one realm to be configured. Please contact an administrator to set up realms in the admin panel.</p>
+    </div>
+    <?php endif; ?>
+
     <div class="row">
         <?php foreach ($categories as $key => $name): ?>
         <div class="col-md-4 mb-3">
-            <a href="<?= site_url("leaderboards/{$key}") ?>" class="card text-decoration-none">
+            <a href="<?= site_url("leaderboards/{$key}") ?>" class="card text-decoration-none <?= !$has_realms ? 'disabled' : '' ?>" <?= !$has_realms ? 'style="pointer-events: none; opacity: 0.6;"' : '' ?>>
                 <div class="card-body text-center">
                     <h3><?= $name ?></h3>
                     <i class="fas fa-trophy fa-3x text-warning mt-2"></i>

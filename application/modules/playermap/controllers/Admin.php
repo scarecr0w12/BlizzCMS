@@ -20,6 +20,7 @@ class Admin extends Admin_Controller
         $this->load->language('playermap/playermap');
         $this->load->language('admin/admin'); // Load core admin language
         $this->load->model('playermap_model');
+        $this->load->model('realm_model');
     }
 
     /**

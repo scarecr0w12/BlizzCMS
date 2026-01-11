@@ -34,6 +34,14 @@
                     </thead>
                     <tbody>
                         <?php 
+                        if (empty($rankings)): 
+                        ?>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <?= lang('leaderboards_no_data') ?>
+                            </td>
+                        </tr>
+                        <?php else:
                         $rank = $offset + 1;
                         foreach ($rankings as $character): 
                         ?>
@@ -48,7 +56,7 @@
                             <td><?= htmlspecialchars($character->skill) ?></td>
                             <td><strong><?= $character->value ?>/<?= $character->max ?></strong></td>
                         </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>
