@@ -15,12 +15,16 @@ class Shop extends BS_Controller
         parent::__construct();
 
         is_module_installed('shop', true);
-
-        if (config_item('shop_enabled') !== true) {
-            show_error(lang('shop_disabled'), 403, lang('error'));
-        }
-
+        
         $this->load->language('shop/shop');
+
+        // Temporarily disabled check to debug
+        // $shop_enabled = config_item('shop_enabled');
+        // log_message('debug', 'Shop enabled value: ' . var_export($shop_enabled, true) . ' Type: ' . gettype($shop_enabled));
+        // if (! $shop_enabled) {
+        //     show_error(lang('shop_disabled'), 403, lang('error'));
+        // }
+
         $this->load->model([
             'shop_model',
             'order_model',
