@@ -175,7 +175,19 @@ class Subscription extends BS_Controller
 
         // If it's a gateway subscription, cancel with the gateway
         if (! empty($subscription->external_subscription_id)) {
-            // TODO: Cancel with PayPal/Stripe
+            $cancel_result = false;
+            
+            if ($subscription->payment_method === 'paypal') {
+                $cancel_result = $this->_cancel_paypal_subscription($subscription->external_subscription_id);
+            } elseif ($subscription->payment_method === 'stripe') {
+                $cancel_result = $this->_cancel_stripe_subscription($subscription->external_subscription_id);
+            }
+
+            if (!$cancel_result) {
+                $this->session->set_flashdata('error', lang('shop_subscription_gateway_cancel_error'));
+                redirect(site_url('shop/subscriptions'));
+                return;
+            }
         }
 
         if ($this->user_subscription_model->cancel($id)) {
@@ -186,6 +198,114 @@ class Subscription extends BS_Controller
         }
 
         redirect(site_url('shop/subscriptions'));
+    }
+
+    /**
+     * Cancel PayPal subscription
+     *
+     * @param string $subscription_id
+     * @return bool
+     */
+    private function _cancel_paypal_subscription($subscription_id)
+    {
+        $paypal_config = [
+            'mode' => config_item('paypal_mode') ?? 'sandbox',
+            'client_id' => config_item('paypal_client_id'),
+            'secret' => config_item('paypal_secret'),
+        ];
+
+        if (empty($paypal_config['client_id']) || empty($paypal_config['secret'])) {
+            return false;
+        }
+
+        try {
+            $token = $this->_get_paypal_access_token($paypal_config);
+            if (!$token) {
+                return false;
+            }
+
+            $api_url = 'https://api.' . ($paypal_config['mode'] === 'sandbox' ? 'sandbox.' : '') . 
+                       'paypal.com/v1/billing/subscriptions/' . $subscription_id . '/cancel';
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $api_url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer ' . $token,
+                'Content-Type: application/json'
+            ]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['reason' => 'User requested cancellation']));
+
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            return in_array($http_code, [200, 204]);
+
+        } catch (Exception $e) {
+            log_message('error', 'PayPal subscription cancellation error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Cancel Stripe subscription
+     *
+     * @param string $subscription_id
+     * @return bool
+     */
+    private function _cancel_stripe_subscription($subscription_id)
+    {
+        $stripe_secret = config_item('stripe_secret_key');
+
+        if (empty($stripe_secret)) {
+            return false;
+        }
+
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://api.stripe.com/v1/subscriptions/' . $subscription_id);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            curl_setopt($ch, CURLOPT_USERPWD, $stripe_secret . ':');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/x-www-form-urlencoded'
+            ]);
+
+            $response = curl_exec($ch);
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            return in_array($http_code, [200, 204]);
+
+        } catch (Exception $e) {
+            log_message('error', 'Stripe subscription cancellation error: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Get PayPal access token
+     *
+     * @param array $config
+     * @return string|false
+     */
+    private function _get_paypal_access_token($config)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.' . ($config['mode'] === 'sandbox' ? 'sandbox.' : '') . 'paypal.com/v1/oauth2/token');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERPWD, $config['client_id'] . ':' . $config['secret']);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $token_data = json_decode($response, true);
+        
+        return $token_data['access_token'] ?? false;
     }
 
     /**

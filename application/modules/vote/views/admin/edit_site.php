@@ -4,8 +4,8 @@
       <div class="uk-width-expand">
         <ul class="uk-breadcrumb uk-margin-remove">
           <li><a href="<?= site_url('admin') ?>"><?= lang('admin_panel') ?></a></li>
-          <li><a href="<?= site_url('admin/vote') ?>"><?= lang('vote') ?></a></li>
-          <li><a href="<?= site_url('admin/vote/sites') ?>"><?= lang('vote_sites') ?></a></li>
+          <li><a href="<?= site_url('vote/admin') ?>"><?= lang('vote') ?></a></li>
+          <li><a href="<?= site_url('vote/admin/sites') ?>"><?= lang('vote_sites') ?></a></li>
           <li><span><?= lang('vote_edit_site') ?></span></li>
         </ul>
         <h1 class="uk-h3 uk-text-bold uk-margin-remove">
@@ -16,7 +16,7 @@
 
     <div class="uk-card uk-card-default">
       <div class="uk-card-body">
-        <?= form_open_multipart('admin/vote/edit-site/' . $site->id, ['class' => 'uk-form-stacked']) ?>
+        <?= form_open_multipart('vote/admin/sites/edit/' . $site->id, ['class' => 'uk-form-stacked']) ?>
           <div class="uk-grid-small" uk-grid>
             <div class="uk-width-1-2@m">
               <div class="uk-margin">
@@ -114,7 +114,7 @@
             <button type="submit" class="uk-button uk-button-primary">
               <i class="fa-solid fa-save"></i> <?= lang('save') ?>
             </button>
-            <a href="<?= site_url('admin/vote/sites') ?>" class="uk-button uk-button-default">
+            <a href="<?= site_url('vote/admin/sites') ?>" class="uk-button uk-button-default">
               <i class="fa-solid fa-times"></i> <?= lang('cancel') ?>
             </a>
           </div>

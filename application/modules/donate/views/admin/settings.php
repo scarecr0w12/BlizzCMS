@@ -15,8 +15,7 @@
 
     <div class="uk-card uk-card-default">
       <div class="uk-card-body">
-        <form action="<?= site_url('donate/admin/settings') ?>" method="post">
-          <?= csrf_field() ?>
+        <?= form_open('donate/admin/settings') ?>
           
           <div class="uk-margin">
             <label>
@@ -53,7 +52,7 @@
               <i class="fa-solid fa-save"></i> <?= lang('save') ?>
             </button>
           </div>
-        </form>
+        <?= form_close() ?>
       </div>
     </div>
   </div>

@@ -51,15 +51,9 @@
         <?php foreach ($featured_items as $item): ?>
         <div>
           <div class="uk-card uk-card-default uk-card-hover">
-            <?php if (! empty($item->image)): ?>
             <div class="uk-card-media-top">
-              <img src="<?= base_url('uploads/shop/' . $item->image) ?>" alt="<?= html_escape($item->name) ?>">
+              <img src="<?= get_item_image($item) ?>" alt="<?= html_escape($item->name) ?>">
             </div>
-            <?php else: ?>
-            <div class="uk-card-media-top uk-background-muted uk-text-center uk-padding">
-              <i class="fa-solid fa-box fa-3x uk-text-muted"></i>
-            </div>
-            <?php endif; ?>
             <div class="uk-card-body uk-padding-small">
               <h3 class="uk-card-title uk-h5 uk-margin-remove"><?= html_escape($item->name) ?></h3>
               <div class="uk-margin-small-top">
@@ -150,15 +144,9 @@
           <?php foreach ($items as $item): ?>
           <div>
             <div class="uk-card uk-card-default uk-card-hover">
-              <?php if (! empty($item->image)): ?>
               <div class="uk-card-media-top">
-                <img src="<?= base_url('uploads/shop/' . $item->image) ?>" alt="<?= html_escape($item->name) ?>">
+                <img src="<?= get_item_image($item) ?>" alt="<?= html_escape($item->name) ?>">
               </div>
-              <?php else: ?>
-              <div class="uk-card-media-top uk-background-muted uk-text-center uk-padding">
-                <i class="fa-solid fa-box fa-3x uk-text-muted"></i>
-              </div>
-              <?php endif; ?>
               <div class="uk-card-body uk-padding-small">
                 <h3 class="uk-card-title uk-h5 uk-margin-remove"><?= html_escape($item->name) ?></h3>
                 <div class="uk-margin-small-top">

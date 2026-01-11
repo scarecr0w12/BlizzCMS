@@ -80,10 +80,9 @@
                       <p><?= lang('donate_confirm_delete_package') ?></p>
                       <p class="uk-text-right">
                         <button class="uk-button uk-button-default uk-modal-close" type="button"><?= lang('cancel') ?></button>
-                        <form action="<?= site_url('donate/admin/packages/delete/' . $package->id) ?>" method="post" class="uk-display-inline">
-                          <?= csrf_field() ?>
+                        <?= form_open('donate/admin/packages/delete/' . $package->id, ['class' => 'uk-display-inline']) ?>
                           <button type="submit" class="uk-button uk-button-danger"><?= lang('delete') ?></button>
-                        </form>
+                        <?= form_close() ?>
                       </p>
                     </div>
                   </div>

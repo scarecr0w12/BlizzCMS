@@ -455,6 +455,10 @@ a.uk-link-heading:hover {
   border-radius: 4px 4px 0 0;
 }
 
+.uk-card-media-top {
+  position: relative;
+}
+
 .uk-card-media-top::after {
   content: "";
   position: absolute;
@@ -463,7 +467,8 @@ a.uk-link-heading:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .uk-card-media-left,

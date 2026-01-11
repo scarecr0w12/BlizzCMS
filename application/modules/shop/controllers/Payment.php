@@ -266,7 +266,31 @@ class Payment extends BS_Controller
             return false;
         }
 
-        // TODO: Implement actual item delivery
+        // Get character info
+        $character = $this->db->where('guid', $order_item->character_id)
+            ->get('characters')
+            ->row();
+        
+        if (empty($character)) {
+            log_message('error', 'Shop: Character not found for delivery - GUID: ' . $order_item->character_id);
+            return false;
+        }
+
+        // Deliver item to character inventory
+        $total_quantity = $product->item_count * $order_item->quantity;
+        
+        for ($i = 0; $i < $total_quantity; $i++) {
+            $this->db->insert('character_inventory', [
+                'guid' => $order_item->character_id,
+                'bag' => 255,
+                'slot' => 0,
+                'item' => $product->item_id,
+                'item_template' => $product->item_id
+            ]);
+        }
+
+        log_message('info', 'Shop: Delivered item ' . $product->item_id . ' x' . $total_quantity . ' to character GUID: ' . $order_item->character_id);
+
         $this->order_model->update_item_status($order_item->id, 'delivered');
         $this->shop_model->reduce_stock($product->id, $order_item->quantity);
 

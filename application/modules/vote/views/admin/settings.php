@@ -4,7 +4,7 @@
       <div class="uk-width-expand">
         <ul class="uk-breadcrumb uk-margin-remove">
           <li><a href="<?= site_url('admin') ?>"><?= lang('admin_panel') ?></a></li>
-          <li><a href="<?= site_url('admin/vote') ?>"><?= lang('vote') ?></a></li>
+          <li><a href="<?= site_url('vote/admin') ?>"><?= lang('vote') ?></a></li>
           <li><span><?= lang('settings') ?></span></li>
         </ul>
         <h1 class="uk-h3 uk-text-bold uk-margin-remove">
@@ -15,7 +15,7 @@
 
     <div class="uk-card uk-card-default">
       <div class="uk-card-body">
-        <?= form_open('admin/vote/settings', ['class' => 'uk-form-stacked']) ?>
+        <?= form_open('vote/admin/settings', ['class' => 'uk-form-stacked']) ?>
           <div class="uk-grid-small" uk-grid>
             <div class="uk-width-1-2@m">
               <div class="uk-margin">

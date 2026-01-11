@@ -11,7 +11,7 @@
         </h1>
       </div>
       <div class="uk-width-auto">
-        <a href="<?= site_url('admin/vote/add-site') ?>" class="uk-button uk-button-primary uk-button-small">
+        <a href="<?= site_url('vote/admin/sites/add') ?>" class="uk-button uk-button-primary uk-button-small">
           <i class="fa-solid fa-plus"></i> <?= lang('vote_add_site') ?>
         </a>
       </div>
@@ -84,21 +84,21 @@
     <!-- Quick Actions -->
     <div class="uk-grid-small uk-margin-top uk-child-width-1-4@m uk-child-width-1-2@s" uk-grid>
       <div>
-        <a href="<?= site_url('admin/vote/sites') ?>" class="uk-card uk-card-default uk-card-body uk-card-hover uk-display-block uk-link-reset">
+        <a href="<?= site_url('vote/admin/sites') ?>" class="uk-card uk-card-default uk-card-body uk-card-hover uk-display-block uk-link-reset">
           <i class="fa-solid fa-globe fa-2x uk-text-primary"></i>
           <h4 class="uk-margin-small-top"><?= lang('vote_manage_sites') ?></h4>
           <p class="uk-text-small uk-text-muted"><?= lang('vote_manage_sites_desc') ?></p>
         </a>
       </div>
       <div>
-        <a href="<?= site_url('admin/vote/logs') ?>" class="uk-card uk-card-default uk-card-body uk-card-hover uk-display-block uk-link-reset">
+        <a href="<?= site_url('vote/admin/logs') ?>" class="uk-card uk-card-default uk-card-body uk-card-hover uk-display-block uk-link-reset">
           <i class="fa-solid fa-history fa-2x uk-text-primary"></i>
           <h4 class="uk-margin-small-top"><?= lang('vote_logs') ?></h4>
           <p class="uk-text-small uk-text-muted"><?= lang('vote_logs_desc') ?></p>
         </a>
       </div>
       <div>
-        <a href="<?= site_url('admin/vote/settings') ?>" class="uk-card uk-card-default uk-card-body uk-card-hover uk-display-block uk-link-reset">
+        <a href="<?= site_url('vote/admin/settings') ?>" class="uk-card uk-card-default uk-card-body uk-card-hover uk-display-block uk-link-reset">
           <i class="fa-solid fa-cog fa-2x uk-text-primary"></i>
           <h4 class="uk-margin-small-top"><?= lang('settings') ?></h4>
           <p class="uk-text-small uk-text-muted"><?= lang('vote_settings_desc') ?></p>
@@ -163,7 +163,7 @@
       </div>
       <?php if (!empty($recent_votes)): ?>
       <div class="uk-card-footer">
-        <a href="<?= site_url('admin/vote/logs') ?>" class="uk-button uk-button-text">
+        <a href="<?= site_url('vote/admin/logs') ?>" class="uk-button uk-button-text">
           <?= lang('view_all') ?> <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>

@@ -51,10 +51,10 @@
 
               <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-2@s">
-                  <label class="uk-form-label"><?= lang('shop_game_item_id') ?> <span class="uk-text-danger">*</span></label>
-                  <input class="uk-input <?= form_error('game_item_id') ? 'uk-form-danger' : '' ?>" type="number" name="game_item_id" value="<?= set_value('game_item_id', $item->game_item_id ?? '') ?>" required>
-                  <span class="uk-text-small uk-text-muted"><?= lang('shop_game_item_id_help') ?></span>
-                  <?= form_error('game_item_id', '<span class="uk-text-small uk-text-danger">', '</span>') ?>
+                  <label class="uk-form-label"><?= lang('shop_item_id') ?> <span class="uk-text-danger">*</span></label>
+                  <input class="uk-input <?= form_error('item_id') ? 'uk-form-danger' : '' ?>" type="number" name="item_id" value="<?= set_value('item_id', $item->item_id ?? '') ?>" required>
+                  <span class="uk-text-small uk-text-muted">WoW game item ID</span>
+                  <?= form_error('item_id', '<span class="uk-text-small uk-text-danger">', '</span>') ?>
                 </div>
                 <div class="uk-width-1-2@s">
                   <label class="uk-form-label"><?= lang('shop_item_count') ?> <span class="uk-text-danger">*</span></label>

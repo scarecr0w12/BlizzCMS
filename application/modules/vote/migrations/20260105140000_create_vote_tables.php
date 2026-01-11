@@ -18,6 +18,30 @@ class Migration_Create_vote_tables extends CI_Migration
             'version' => '1.0.0'
         ]);
 
+        // Add permissions
+        $permissions = [
+            ['key' => 'view.vote', 'module' => 'vote', 'description' => 'Can view vote admin dashboard'],
+            ['key' => 'add.vote', 'module' => 'vote', 'description' => 'Can add vote sites'],
+            ['key' => 'edit.vote', 'module' => 'vote', 'description' => 'Can edit vote sites'],
+            ['key' => 'delete.vote', 'module' => 'vote', 'description' => 'Can delete vote sites']
+        ];
+        $this->db->insert_batch('permissions', $permissions);
+
+        // Assign permissions to Administrator role
+        $admin_role = $this->db->where('name', 'Administrator')->get('roles')->row();
+        $vote_permissions = $this->db->where('module', 'vote')->get('permissions')->result();
+
+        if ($admin_role && $vote_permissions) {
+            $role_permissions = [];
+            foreach ($vote_permissions as $permission) {
+                $role_permissions[] = [
+                    'role_id'       => $admin_role->id,
+                    'permission_id' => $permission->id
+                ];
+            }
+            $this->db->insert_batch('roles_permissions', $role_permissions);
+        }
+
         // Vote Sites table
         $this->dbforge->add_field([
             'id' => [
@@ -171,7 +195,10 @@ class Migration_Create_vote_tables extends CI_Migration
         $settings = [
             ['key' => 'vote_enabled', 'value' => '1', 'type' => 'bool'],
             ['key' => 'vote_points_per_vote', 'value' => '1', 'type' => 'int'],
-            ['key' => 'vote_cooldown_hours', 'value' => '12', 'type' => 'int']
+            ['key' => 'vote_cooldown_hours', 'value' => '12', 'type' => 'int'],
+            ['key' => 'vote_ip_check', 'value' => '0', 'type' => 'bool'],
+            ['key' => 'vote_top_voters_count', 'value' => '10', 'type' => 'int'],
+            ['key' => 'vote_show_top_sidebar', 'value' => '1', 'type' => 'bool']
         ];
 
         $this->db->insert_batch('settings', $settings);
@@ -183,12 +210,25 @@ class Migration_Create_vote_tables extends CI_Migration
         $this->db->where_in('key', [
             'vote_enabled',
             'vote_points_per_vote',
-            'vote_cooldown_hours'
+            'vote_cooldown_hours',
+            'vote_ip_check',
+            'vote_top_voters_count',
+            'vote_show_top_sidebar'
         ])->delete('settings');
 
         // Drop tables
         $this->dbforge->drop_table('vote_logs', TRUE);
         $this->dbforge->drop_table('vote_sites', TRUE);
+
+        // Remove role permissions
+        $vote_permissions = $this->db->where('module', 'vote')->get('permissions')->result();
+        if ($vote_permissions) {
+            $permission_ids = array_column($vote_permissions, 'id');
+            $this->db->where_in('permission_id', $permission_ids)->delete('roles_permissions');
+        }
+
+        // Remove permissions
+        $this->db->where('module', 'vote')->delete('permissions');
 
         // Remove module registration
         $this->db->where('module', 'vote')->delete('modules');

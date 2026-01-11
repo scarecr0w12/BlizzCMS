@@ -4,7 +4,7 @@
       <div class="uk-width-expand">
         <ul class="uk-breadcrumb uk-margin-remove">
           <li><a href="<?= site_url('admin') ?>"><?= lang('admin_panel') ?></a></li>
-          <li><a href="<?= site_url('admin/vote') ?>"><?= lang('vote') ?></a></li>
+          <li><a href="<?= site_url('vote/admin') ?>"><?= lang('vote') ?></a></li>
           <li><span><?= lang('vote_sites') ?></span></li>
         </ul>
         <h1 class="uk-h3 uk-text-bold uk-margin-remove">
@@ -12,7 +12,7 @@
         </h1>
       </div>
       <div class="uk-width-auto">
-        <a href="<?= site_url('admin/vote/add-site') ?>" class="uk-button uk-button-primary uk-button-small">
+        <a href="<?= site_url('vote/admin/sites/add') ?>" class="uk-button uk-button-primary uk-button-small">
           <i class="fa-solid fa-plus"></i> <?= lang('vote_add_site') ?>
         </a>
       </div>
@@ -24,7 +24,7 @@
         <div class="uk-padding uk-text-center">
           <i class="fa-solid fa-globe fa-3x uk-text-muted"></i>
           <p class="uk-text-muted"><?= lang('vote_no_sites') ?></p>
-          <a href="<?= site_url('admin/vote/add-site') ?>" class="uk-button uk-button-primary uk-button-small">
+          <a href="<?= site_url('vote/admin/sites/add') ?>" class="uk-button uk-button-primary uk-button-small">
             <i class="fa-solid fa-plus"></i> <?= lang('vote_add_site') ?>
           </a>
         </div>
@@ -78,12 +78,14 @@
                   <?php endif; ?>
                 </td>
                 <td class="uk-text-right">
-                  <a href="<?= site_url('admin/vote/edit-site/' . $site->id) ?>" class="uk-button uk-button-primary uk-button-small" uk-tooltip="<?= lang('edit') ?>">
+                  <a href="<?= site_url('vote/admin/sites/edit/' . $site->id) ?>" class="uk-button uk-button-primary uk-button-small" uk-tooltip="<?= lang('edit') ?>">
                     <i class="fa-solid fa-edit"></i>
                   </a>
-                  <a href="<?= site_url('admin/vote/delete-site/' . $site->id) ?>" class="uk-button uk-button-danger uk-button-small" uk-tooltip="<?= lang('delete') ?>" onclick="return confirm('<?= lang('confirm_delete') ?>');">
-                    <i class="fa-solid fa-trash"></i>
-                  </a>
+                  <form method="post" action="<?= site_url('vote/admin/sites/delete/' . $site->id) ?>" style="display: inline-block;">
+                    <button type="submit" class="uk-button uk-button-danger uk-button-small" uk-tooltip="<?= lang('delete') ?>" onclick="return confirm('<?= lang('vote_confirm_delete_site') ?>');">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
                 </td>
               </tr>
               <?php endforeach; ?>

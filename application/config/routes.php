@@ -83,3 +83,9 @@ $route['news/comment/delete/(:num)']['get'] = 'news/delete_comment/$1';
  * Page Routes
 */
 $route['page/(:any)']['get'] = 'page/index/$1';
+
+/**
+ * Profile Enhanced Routes
+*/
+$route['profile']['get'] = 'profile_enhanced/profile_enhanced/index';
+$route['profile/(:any)'] = 'profile_enhanced/profile_enhanced/view/$1';
