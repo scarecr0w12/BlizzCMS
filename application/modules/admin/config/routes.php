@@ -98,3 +98,17 @@ $route['admin/pages']['get'] = 'pages/index';
 $route['admin/pages/add'] = 'pages/add';
 $route['admin/pages/edit/(:num)'] = 'pages/edit/$1';
 $route['admin/pages/delete/(:num)']['get'] = 'pages/delete/$1';
+
+$route['admin/tickets']['get'] = 'tickets/index';
+$route['admin/tickets/view/(:num)']['get'] = 'tickets/view/$1';
+$route['admin/tickets/update/(:num)'] = 'tickets/update/$1';
+$route['admin/tickets/delete/(:num)']['get'] = 'tickets/delete/$1';
+
+$route['admin/head-scripts']['get'] = 'head_scripts/index';
+$route['admin/head-scripts/add'] = 'head_scripts/add';
+$route['admin/head-scripts/edit/(:num)'] = 'head_scripts/edit/$1';
+$route['admin/head-scripts/delete/(:num)']['get'] = 'head_scripts/delete/$1';
+
+$route['admin/welcome']['get'] = 'welcome/index';
+$route['admin/welcome/edit'] = 'welcome/edit';
+$route['admin/welcome/update'] = 'welcome/update';

@@ -6,9 +6,9 @@ $query_builder = true;
 
 $db['cms'] = [
 	'dsn'      => '',
-	'hostname' => 'dbserver',
+	'hostname' => 'localhost',
 	'username' => 'blizzcms',
-	'password' => 'blizzcmspassword',
+	'password' => '!rpHfo@Bihnv10IK',
 	'database' => 'blizzcms',
 	'port'     => 3306,
 	'dbdriver' => 'mysqli',
@@ -29,7 +29,7 @@ $db['cms'] = [
 
 $db['auth'] = [
 	'dsn'      => '',
-	'hostname' => 'host.docker.internal',
+	'hostname' => 'localhost',
 	'username' => 'acore',
 	'password' => 'acore',
 	'database' => 'acore_auth',

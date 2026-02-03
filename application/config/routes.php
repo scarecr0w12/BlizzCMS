@@ -80,6 +80,12 @@ $route['news/comment/edit/(:num)'] = 'news/edit_comment/$1';
 $route['news/comment/delete/(:num)']['get'] = 'news/delete_comment/$1';
 
 /**
+ * Sitemap Routes
+*/
+$route['sitemap.xml']['get'] = 'sitemap/index';
+$route['sitemap/index.xml']['get'] = 'sitemap/index_xml';
+
+/**
  * Page Routes
 */
 $route['page/(:any)']['get'] = 'page/index/$1';

@@ -60,11 +60,16 @@ if (! function_exists('locate_date'))
         $CI->load->library('multilanguage');
 
         $dateTime  = new \DateTime($date);
-        $formatter = new \IntlDateFormatter($CI->multilanguage->current_language('locale'), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT, $timezone, \IntlDateFormatter::GREGORIAN);
-
-        $formatter->setPattern($pattern);
-
-        return $formatter->format($dateTime);
+        
+        // Check if IntlDateFormatter is available
+        if (class_exists('\IntlDateFormatter')) {
+            $formatter = new \IntlDateFormatter($CI->multilanguage->current_language('locale'), \IntlDateFormatter::MEDIUM, \IntlDateFormatter::SHORT, $timezone, \IntlDateFormatter::GREGORIAN);
+            $formatter->setPattern($pattern);
+            return $formatter->format($dateTime);
+        } else {
+            // Fallback to basic date formatting if intl extension is not available
+            return $dateTime->format('Y-m-d H:i');
+        }
     }
 }
 
