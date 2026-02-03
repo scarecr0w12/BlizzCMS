@@ -397,3 +397,23 @@ $lang['install_change_file_failed'] = 'It was not possible to change the config 
 $lang['install_step_locked'] = 'This step cannot be redone because it was completed';
 $lang['install_find_account_failed'] = 'It was not possible to find an account with the indicated username';
 $lang['install_require_gm_rank'] = 'The account indicated does not have a GM rank equal to or greater than 3';
+
+/**
+ * Welcome Message System
+ */
+$lang['welcome'] = 'Welcome';
+$lang['welcome_section'] = 'Welcome Section';
+$lang['edit_welcome_content'] = 'Edit the welcome message and server specifications displayed on the homepage';
+$lang['welcome_message'] = 'Welcome Message';
+$lang['welcome_title'] = 'Welcome Title';
+$lang['welcome_description'] = 'Welcome Description';
+$lang['welcome_subtitle'] = 'Welcome Subtitle';
+$lang['server_specs'] = 'Server Specifications';
+$lang['experience_rate'] = 'Experience Rate';
+$lang['player_count'] = 'Player Count';
+$lang['secure_and_stable'] = 'Secure and Stable';
+$lang['24_7_support'] = '24/7 Support';
+$lang['active_and_friendly'] = 'Active and Friendly';
+$lang['save_changes'] = 'Save Changes';
+$lang['view_homepage'] = 'View Homepage';
+$lang['tip'] = 'Tip';

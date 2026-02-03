@@ -15,7 +15,7 @@ class Admin extends Admin_Controller
         parent::__construct();
 
         is_module_installed('knowledgebase', true);
-        require_permission('knowledgebase.admin', 'knowledgebase');
+        require_permission('knowledgebase.admin');
 
         $this->load->language('knowledgebase/knowledgebase');
         $this->load->helper('knowledgebase/knowledgebase');

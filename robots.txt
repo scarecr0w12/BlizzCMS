@@ -1,0 +1,40 @@
+# BlizzCMS robots.txt
+# This file tells search engines which pages to crawl and which to avoid
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /shop/admin/
+Disallow: /donate/admin/
+Disallow: /armory/admin/
+Disallow: /kb/admin/
+Disallow: /pvpstats/admin/
+Disallow: /vote/admin/
+Disallow: /worldboss/admin/
+Disallow: /user/
+Disallow: /install/
+Disallow: /application/
+Disallow: /system/
+Disallow: /shop/cart
+Disallow: /shop/checkout
+Disallow: /donate/callback/
+Disallow: /shop/payment/
+Disallow: /*/admin/
+Disallow: /*?*sort=
+Disallow: /*?*page=
+Disallow: /*?*filter=
+
+# Allow specific search pages
+Allow: /kb/search
+Allow: /armory/search
+Allow: /pvpstats/
+
+# Crawl delay (in seconds) - adjust based on server capacity
+Crawl-delay: 1
+
+# Request rate (pages per second)
+Request-rate: 10/1s
+
+# Sitemap location
+Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://yourdomain.com/sitemap/index.xml

@@ -30,6 +30,75 @@
     </div>
   </div>
 </section>
+<section class="uk-section bc-welcome-section">
+  <div class="uk-container">
+    <div uk-grid>
+      <div class="uk-width-1-2@m">
+        <h2 class="uk-h2 uk-text-bold uk-margin-small"><?= config_item('welcome_title') ?? lang('welcome') ?></h2>
+        <p class="uk-text-lead uk-margin-small"><?= config_item('welcome_description') ?? 'Join thousands of players in an epic adventure.' ?></p>
+        <p class="uk-text-muted"><?= config_item('welcome_subtitle') ?? 'Experience the ultimate gaming community with our carefully crafted realm.' ?></p>
+      </div>
+      <div class="uk-width-1-2@m">
+        <div class="uk-grid-small uk-child-width-1-2 uk-text-center" uk-grid>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <div class="uk-text-large uk-text-bold uk-margin-small">
+                <i class="fa-solid fa-globe"></i>
+              </div>
+              <h5 class="uk-h5 uk-text-bold uk-margin-small"><?= lang('expansion') ?></h5>
+              <p class="uk-text-small uk-margin-remove"><?= config_item('welcome_spec_expansion') ?? 'World of Warcraft' ?></p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <div class="uk-text-large uk-text-bold uk-margin-small">
+                <i class="fa-solid fa-tachometer-alt"></i>
+              </div>
+              <h5 class="uk-h5 uk-text-bold uk-margin-small"><?= lang('experience_rate') ?></h5>
+              <p class="uk-text-small uk-margin-remove"><?= config_item('welcome_spec_exp_rate') ?? '1x - 10x' ?></p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <div class="uk-text-large uk-text-bold uk-margin-small">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <h5 class="uk-h5 uk-text-bold uk-margin-small"><?= lang('player_count') ?></h5>
+              <p class="uk-text-small uk-margin-remove"><?= config_item('welcome_spec_realms') ?? 'Multiple Realms' ?></p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <div class="uk-text-large uk-text-bold uk-margin-small">
+                <i class="fa-solid fa-shield"></i>
+              </div>
+              <h5 class="uk-h5 uk-text-bold uk-margin-small"><?= lang('security') ?></h5>
+              <p class="uk-text-small uk-margin-remove"><?= config_item('welcome_spec_security') ?? lang('secure_and_stable') ?></p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <div class="uk-text-large uk-text-bold uk-margin-small">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <h5 class="uk-h5 uk-text-bold uk-margin-small"><?= lang('support') ?></h5>
+              <p class="uk-text-small uk-margin-remove"><?= config_item('welcome_spec_support') ?? lang('24_7_support') ?></p>
+            </div>
+          </div>
+          <div>
+            <div class="uk-card uk-card-default uk-card-body">
+              <div class="uk-text-large uk-text-bold uk-margin-small">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <h5 class="uk-h5 uk-text-bold uk-margin-small"><?= lang('community') ?></h5>
+              <p class="uk-text-small uk-margin-remove"><?= config_item('welcome_spec_community') ?? lang('active_and_friendly') ?></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="uk-section uk-section-xsmall bc-default-section" uk-height-viewport="expand: true">
   <div class="uk-container">
     <div class="uk-margin" uk-grid>

@@ -110,5 +110,6 @@ $route['admin/head-scripts/edit/(:num)'] = 'head_scripts/edit/$1';
 $route['admin/head-scripts/delete/(:num)']['get'] = 'head_scripts/delete/$1';
 
 $route['admin/welcome']['get'] = 'welcome/index';
+$route['admin/welcome/upload_image'] = 'welcome/upload_image';
 $route['admin/welcome/edit'] = 'welcome/edit';
 $route['admin/welcome/update'] = 'welcome/update';

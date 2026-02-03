@@ -112,6 +112,9 @@
                 </a>
                 <div class="uk-navbar-dropdown" uk-drop="boundary: ! .uk-container">
                   <ul class="uk-nav uk-navbar-dropdown-nav">
+                    <li class="<?= is_route_active('admin/welcome') ? 'uk-active' : '' ?>">
+                      <a href="<?= site_url('admin/welcome') ?>"><?= lang('welcome_section') ?></a>
+                    </li>
                     <li class="<?= is_route_active('admin/news') ? 'uk-active' : '' ?>">
                       <a href="<?= site_url('admin/news') ?>"><?= lang('news') ?></a>
                     </li>
@@ -193,6 +196,9 @@
               <span class="bc-li-icon"><i class="fa-solid fa-object-ungroup fa-lg"></i></span><?= lang('sections') ?> <span uk-nav-parent-icon></span>
             </a>
             <ul class="uk-nav-sub">
+              <li class="<?= is_route_active('admin/welcome') ? 'uk-active' : '' ?>">
+                <a href="<?= site_url('admin/welcome') ?>"><?= lang('welcome_section') ?></a>
+              </li>
               <li class="<?= is_route_active('admin/news') ? 'uk-active' : '' ?>">
                 <a href="<?= site_url('admin/news') ?>"><?= lang('news') ?></a>
               </li>

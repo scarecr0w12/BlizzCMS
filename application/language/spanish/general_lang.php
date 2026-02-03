@@ -397,3 +397,23 @@ $lang['install_change_file_failed'] = 'No fue posible cambiar el archivo de conf
 $lang['install_step_locked'] = 'Este paso no se puede realizar porque el CMS ya está instalado';
 $lang['install_find_account_failed'] = 'No fue posible encontrar una cuenta con el nombre de usuario indicado';
 $lang['install_require_gm_rank'] = 'La cuenta indicada no tiene un rango de GM igual o mayor a 3';
+
+/**
+ * Welcome Message System
+ */
+$lang['welcome'] = 'Bienvenido';
+$lang['welcome_section'] = 'Sección de Bienvenida';
+$lang['edit_welcome_content'] = 'Editar el mensaje de bienvenida y las especificaciones del servidor mostradas en la página de inicio';
+$lang['welcome_message'] = 'Mensaje de Bienvenida';
+$lang['welcome_title'] = 'Título de Bienvenida';
+$lang['welcome_description'] = 'Descripción de Bienvenida';
+$lang['welcome_subtitle'] = 'Subtítulo de Bienvenida';
+$lang['server_specs'] = 'Especificaciones del Servidor';
+$lang['experience_rate'] = 'Tasa de Experiencia';
+$lang['player_count'] = 'Cantidad de Jugadores';
+$lang['secure_and_stable'] = 'Seguro y Estable';
+$lang['24_7_support'] = 'Soporte 24/7';
+$lang['active_and_friendly'] = 'Activo y Amigable';
+$lang['save_changes'] = 'Guardar Cambios';
+$lang['view_homepage'] = 'Ver Página de Inicio';
+$lang['tip'] = 'Consejo';

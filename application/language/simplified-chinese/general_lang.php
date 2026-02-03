@@ -397,3 +397,23 @@ $lang['install_change_file_failed'] = '无法更改配置文件。确保您对�
 $lang['install_step_locked'] = '此步骤已完成，因此无法重做';
 $lang['install_find_account_failed'] = '无法找到具有指定用户名的帐户';
 $lang['install_require_gm_rank'] = '所示帐户的GM级别不等于或大于3';
+
+/**
+ * Welcome Message System
+ */
+$lang['welcome'] = '欢迎';
+$lang['welcome_section'] = '欢迎部分';
+$lang['edit_welcome_content'] = '编辑主页上显示的欢迎消息和服务器规格';
+$lang['welcome_message'] = '欢迎消息';
+$lang['welcome_title'] = '欢迎标题';
+$lang['welcome_description'] = '欢迎描述';
+$lang['welcome_subtitle'] = '欢迎副标题';
+$lang['server_specs'] = '服务器规格';
+$lang['experience_rate'] = '经验速率';
+$lang['player_count'] = '玩家数量';
+$lang['secure_and_stable'] = '安全稳定';
+$lang['24_7_support'] = '24/7 支持';
+$lang['active_and_friendly'] = '活跃友好';
+$lang['save_changes'] = '保存更改';
+$lang['view_homepage'] = '查看主页';
+$lang['tip'] = '提示';

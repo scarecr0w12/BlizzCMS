@@ -213,6 +213,7 @@ $lang['test_email_message'] = 'Este es un correo electrónico de prueba generado
  * Alerts
 */
 $lang['alert_settings_updated'] = 'Los datos de configuración se han actualizado.';
+$lang['settings_updated_successfully'] = 'Configuración actualizada correctamente.';
 $lang['alert_logs_purged'] = 'Los datos de registros han sido purgados.';
 $lang['alert_test_email_sent'] = 'El correo electrónico de prueba ha sido enviado.';
 $lang['alert_cache_deleted'] = 'Todos los archivos de caché han sido eliminados.';

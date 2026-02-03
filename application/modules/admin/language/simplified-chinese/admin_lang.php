@@ -213,6 +213,7 @@ $lang['test_email_message'] = '这是一封由BlizzCMS生成的测试电子邮�
  * Alerts
 */
 $lang['alert_settings_updated'] = '设置数据已更新';
+$lang['settings_updated_successfully'] = '设置更新成功';
 $lang['alert_logs_purged'] = '日志数据已清除';
 $lang['alert_test_email_sent'] = '测试电子邮件已发送';
 $lang['alert_cache_deleted'] = '所有缓存文件都已删除';

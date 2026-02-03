@@ -38,10 +38,7 @@ class Base_hook
      */
     public function load_settings()
     {
-        if ($this->CI->load->database() !== false) {
-            return;
-        }
-
+        // Database is already loaded (autoload), so we can proceed
         $data = $this->CI->setting_model->get_all();
 
         foreach ($data as $row) {

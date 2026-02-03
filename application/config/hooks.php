@@ -18,7 +18,7 @@ $hook['post_controller_constructor'][] = [
     'filepath' => 'hooks'
 ];
 
-$hook['post_controller_constructor'][] = [
+$hook['pre_controller'][] = [
     'class' => 'Base_hook',
     'function' => 'load_settings',
     'filename' => 'Base_hook.php',

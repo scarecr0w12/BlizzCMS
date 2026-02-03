@@ -1,3 +1,17 @@
+<section class="uk-section uk-section-xsmall">
+  <div class="uk-container">
+    <div class="uk-flex uk-flex-middle uk-margin" uk-grid>
+      <div class="uk-width-expand">
+        <ul class="uk-breadcrumb uk-margin-remove">
+          <li><a href="<?= site_url('admin') ?>"><?= lang('admin_panel') ?></a></li>
+          <li><span><?= lang('welcome_section') ?></span></li>
+        </ul>
+        <h1 class="uk-h3 uk-text-bold uk-margin-remove"><?= lang('welcome_section') ?></h1>
+      </div>
+      <div class="uk-width-auto"></div>
+    </div>
+  </div>
+</section>
 <section class="uk-section">
   <div class="uk-container">
     <div class="uk-grid-large" uk-grid>

@@ -16,11 +16,12 @@ class Shop extends BS_Controller
 
         is_module_installed('shop', true);
 
+        $this->load->language('shop/shop');
+
         if (config_item('shop_enabled') !== true) {
             show_error(lang('shop_disabled'), 403, lang('error'));
         }
 
-        $this->load->language('shop/shop');
         $this->load->model([
             'shop_model',
             'order_model',

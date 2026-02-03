@@ -84,6 +84,15 @@ $route['news/comment/delete/(:num)']['get'] = 'news/delete_comment/$1';
 */
 $route['sitemap.xml']['get'] = 'sitemap/index';
 $route['sitemap/index.xml']['get'] = 'sitemap/index_xml';
+$route['sitemap/core']['get'] = 'sitemap/core';
+$route['sitemap/news']['get'] = 'sitemap/news';
+$route['sitemap/shop']['get'] = 'sitemap/shop';
+$route['sitemap/armory']['get'] = 'sitemap/armory';
+$route['sitemap/knowledgebase']['get'] = 'sitemap/knowledgebase';
+$route['sitemap/donate']['get'] = 'sitemap/donate';
+$route['sitemap/pvpstats']['get'] = 'sitemap/pvpstats';
+$route['sitemap/vote']['get'] = 'sitemap/vote';
+$route['sitemap/worldboss']['get'] = 'sitemap/worldboss';
 
 /**
  * Page Routes
